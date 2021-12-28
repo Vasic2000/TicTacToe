@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import kotlin.system.exitProcess
 
 private var backPressedTime: Long = 0
 private lateinit var backToast: Toast
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         getSupportActionBar()?.hide()
         BtnStart()
     }
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel()
             super.onBackPressed()
+            exitProcess(0)
             return
         } else {
             backToast = Toast.makeText(this, "Press Back to exit again", Toast.LENGTH_SHORT)
@@ -36,6 +39,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun GameStart() {
-        TODO("Not yet implemented")
+
     }
 }
