@@ -10,6 +10,7 @@
 
     <color name="colorBlack95">#95000000</color>
     <color name="colorBlack60">#60000000</color>
+    <color name="colorTransparent">#00000000</color>
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlue">#48d1ff</color>
