@@ -11,27 +11,21 @@ import kotlin.system.exitProcess
 private var backPressedTime: Long = 0
 private lateinit var backToast: Toast
 
-private lateinit var backgroundImage : ImageView
-private lateinit var easyLevelBtn : Button
-private lateinit var hardLevelBtn : Button
-private lateinit var impossibleLevelBtn : Button
-private lateinit var startGameBtn : Button
-
 class MainActivity : AppCompatActivity() {
+    private val backgroundImage : ImageView = findViewById(R.id.main_background)
+    private val easyLevelBtn : Button = findViewById(R.id.easyLevelBtn)
+    private val hardLevelBtn : Button = findViewById(R.id.hardLevelBtn)
+    private val impossibleLevelBtn : Button = findViewById(R.id.impossiblrLevelBtn)
+    private val startGameBtn : Button = findViewById(R.id.buttonStart)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getSupportActionBar()?.hide()
-
         MakeStartScreen()
     }
 
     private fun MakeStartScreen() {
-        backgroundImage = findViewById(R.id.main_background)
-        easyLevelBtn = findViewById(R.id.easyLevelBtn)
-        hardLevelBtn = findViewById(R.id.hardLevelBtn)
-        impossibleLevelBtn = findViewById(R.id.impossiblrLevelBtn)
-        startGameBtn = findViewById(R.id.buttonStart)
         BtnStart()
     }
 
