@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TicTacToe</string>
     <string name="start">Start</string>
+    <string name="easy">Easy</string>
+    <string name="hard">Hard</string>
+    <string name="impossible">Impossible</string>
 </resources>
