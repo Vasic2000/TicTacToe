@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import java.util.*
 import kotlin.system.exitProcess
 
 private var backPressedTime: Long = 0
@@ -14,20 +13,20 @@ private lateinit var backToast: Toast
 private var gameState: GameState = GameState.FIRST_SCREEN
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var backgroundImage: ImageView
+    lateinit var backgroundImage: ImageView
     private lateinit var easyLevelBtn: Button
     private lateinit var hardLevelBtn: Button
     private lateinit var impossibleLevelBtn: Button
     private lateinit var startGameBtn: Button
 
-    private lateinit var leftVerticalLineShadowImage: ImageView
-    private lateinit var rightVerticalLineShadowImage: ImageView
-    private lateinit var topHorizontalLineShadowImage: ImageView
-    private lateinit var bottomHorizontalLineShadowImage: ImageView
-    private lateinit var leftVerticalLineImage: ImageView
-    private lateinit var rightVerticalLineImage: ImageView
-    private lateinit var topHorizontalLineImage: ImageView
-    private lateinit var bottomHorizontalLineImage: ImageView
+    lateinit var leftVerticalLineShadowImage: ImageView
+    lateinit var rightVerticalLineShadowImage: ImageView
+    lateinit var topHorizontalLineShadowImage: ImageView
+    lateinit var bottomHorizontalLineShadowImage: ImageView
+    lateinit var leftVerticalLineImage: ImageView
+    lateinit var rightVerticalLineImage: ImageView
+    lateinit var topHorizontalLineImage: ImageView
+    lateinit var bottomHorizontalLineImage: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,12 +64,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun GameStart() {
         backgroundImage.setImageResource(R.drawable.background)
-
-        startGameBtn.visibility = View.INVISIBLE
-
         easyLevelBtn.visibility = View.VISIBLE
         hardLevelBtn.visibility = View.VISIBLE
         impossibleLevelBtn.visibility = View.VISIBLE
+        startGameBtn.visibility = View.INVISIBLE
 
         BtnEasyGame()
         BtnHardGame()
@@ -125,17 +122,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun DrawLevel() {
-        backgroundImage.setImageResource(R.drawable.background)
-        leftVerticalLineShadowImage.visibility = View.VISIBLE
-        leftVerticalLineImage.visibility = View.VISIBLE
-
-        rightVerticalLineShadowImage.visibility = View.VISIBLE
-        rightVerticalLineImage.visibility = View.VISIBLE
-
-        topHorizontalLineShadowImage.visibility = View.VISIBLE
-        topHorizontalLineImage.visibility = View.VISIBLE
-
-        bottomHorizontalLineShadowImage.visibility = View.VISIBLE
-        bottomHorizontalLineImage.visibility = View.VISIBLE
+        val levelDraw = LevelDraw(this)
+        val thread = Thread(levelDraw)
+        thread.start()
     }
 }
