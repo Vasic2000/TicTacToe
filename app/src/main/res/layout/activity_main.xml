@@ -80,7 +80,7 @@
 
     <!--    Тень нижней горизонтальной палочки-->
     <ImageView
-        android:id="@+id/botton_line_shadow"
+        android:id="@+id/bottom_line_shadow"
         android:scaleType="fitXY"
         android:src="@drawable/horizontal_line_shadow"
         android:layout_width="0dp"
@@ -164,7 +164,7 @@
 
 <!--    Нижняя горизонтальная палочка-->
     <ImageView
-        android:id="@+id/botton_line"
+        android:id="@+id/bottom_line"
         android:scaleType="fitXY"
         android:src="@drawable/horizontal_line"
         android:layout_width="0dp"
@@ -301,5 +301,131 @@
             android:textColor="@color/colorBlack95"
             android:textSize="24sp" />
     </LinearLayout>
+
+    <!-- Ячейка 1-1-->
+    <ImageView
+        android:id="@+id/Cell_1_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/top_line"
+        app:layout_constraintEnd_toStartOf="@+id/left_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="@+id/top_line"
+        app:layout_constraintTop_toTopOf="@+id/left_line"
+        android:visibility="invisible"/>
+
+    <!-- Ячейка 1-2-->
+    <ImageView
+        android:id="@+id/Cell_1_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/top_line"
+        app:layout_constraintEnd_toStartOf="@+id/right_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toEndOf="@+id/left_line"
+        app:layout_constraintTop_toTopOf="@+id/left_line"
+        android:visibility="invisible"/>
+
+    <!-- Ячейка 1-3-->
+    <ImageView
+        android:id="@+id/Cell_1_3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/top_line"
+        app:layout_constraintEnd_toEndOf="@+id/top_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toEndOf="@+id/right_line"
+        app:layout_constraintTop_toTopOf="@+id/right_line"
+        android:visibility="invisible"/>
+
+    <!-- Ячейка 2-1-->
+    <ImageView
+        android:id="@+id/Cell_2_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_line"
+        app:layout_constraintEnd_toStartOf="@+id/left_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="@+id/top_line"
+        app:layout_constraintTop_toBottomOf="@+id/top_line"
+        android:visibility="invisible"/>
+
+    <!-- Ячейка 2-2-->
+    <ImageView
+        android:id="@+id/Cell_2_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_line"
+        app:layout_constraintEnd_toStartOf="@+id/right_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toEndOf="@+id/left_line"
+        app:layout_constraintTop_toBottomOf="@+id/top_line"
+        android:visibility="invisible"/>
+
+    <!-- Ячейка 2-3-->
+    <ImageView
+        android:id="@+id/Cell_2_3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_line"
+        app:layout_constraintEnd_toEndOf="@+id/top_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toEndOf="@+id/right_line"
+        app:layout_constraintTop_toBottomOf="@+id/top_line"
+        android:visibility="invisible"/>
+
+    <!-- Ячейка 3-1-->
+    <ImageView
+        android:id="@+id/Cell_3_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/left_line"
+        app:layout_constraintEnd_toStartOf="@+id/left_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="@+id/top_line"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_line"
+        android:visibility="invisible"/>
+
+    <!-- Ячейка 3-2-->
+    <ImageView
+        android:id="@+id/Cell_3_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/left_line"
+        app:layout_constraintEnd_toStartOf="@+id/right_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toEndOf="@+id/left_line"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_line"
+        android:visibility="invisible"/>
+
+    <!-- Ячейка 3-3-->
+    <ImageView
+        android:id="@+id/Cell_3_3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/left_line"
+        app:layout_constraintEnd_toEndOf="@+id/top_line"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toEndOf="@+id/right_line"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_line"
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

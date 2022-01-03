@@ -1,8 +1,9 @@
 package ru.vasic2000.tictactoe
 
 enum class GameState {
-    FIRST_SCREEN,
-    SECOND_SCREEN,
-    GAME_SCREEN,
-    GAME_OVER_SCREEN
+    GAME_VAIT,
+    GAME_START,
+    GAME_CONTINUE,
+    GAME_WIN,
+    GAME_LOOS
 }

@@ -10,10 +10,14 @@ import kotlin.system.exitProcess
 
 private var backPressedTime: Long = 0
 private lateinit var backToast: Toast
-private var gameState: GameState = GameState.FIRST_SCREEN
+private var gameScreen: GameScreen = GameScreen.FIRST_SCREEN
+private var gameState: GameState = GameState.GAME_VAIT
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var gameState : GameState
     lateinit var backgroundImage: ImageView
+
     private lateinit var easyLevelBtn: Button
     private lateinit var hardLevelBtn: Button
     private lateinit var impossibleLevelBtn: Button
@@ -27,6 +31,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var rightVerticalLineImage: ImageView
     lateinit var topHorizontalLineImage: ImageView
     lateinit var bottomHorizontalLineImage: ImageView
+
+    lateinit var cell_1_1: ImageView
+    lateinit var cell_1_2: ImageView
+    lateinit var cell_1_3: ImageView
+    lateinit var cell_2_1: ImageView
+    lateinit var cell_2_2: ImageView
+    lateinit var cell_2_3: ImageView
+    lateinit var cell_3_1: ImageView
+    lateinit var cell_3_2: ImageView
+    lateinit var cell_3_3: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +56,20 @@ class MainActivity : AppCompatActivity() {
         leftVerticalLineShadowImage = findViewById(R.id.left_line_shadow)
         rightVerticalLineShadowImage = findViewById(R.id.right_line_shadow)
         topHorizontalLineShadowImage = findViewById(R.id.top_line_shadow)
-        bottomHorizontalLineShadowImage = findViewById(R.id.botton_line_shadow)
+        bottomHorizontalLineShadowImage = findViewById(R.id.bottom_line_shadow)
         leftVerticalLineImage = findViewById(R.id.left_line)
         rightVerticalLineImage = findViewById(R.id.right_line)
         topHorizontalLineImage = findViewById(R.id.top_line)
-        bottomHorizontalLineImage = findViewById(R.id.botton_line)
+        bottomHorizontalLineImage = findViewById(R.id.bottom_line)
+        cell_1_1 = findViewById(R.id.Cell_1_1)
+        cell_1_2 = findViewById(R.id.Cell_1_2)
+        cell_1_3 = findViewById(R.id.Cell_1_3)
+        cell_2_1 = findViewById(R.id.Cell_2_1)
+        cell_2_2 = findViewById(R.id.Cell_2_2)
+        cell_2_3 = findViewById(R.id.Cell_2_3)
+        cell_3_1 = findViewById(R.id.Cell_3_1)
+        cell_3_2 = findViewById(R.id.Cell_3_2)
+        cell_3_3 = findViewById(R.id.Cell_3_3)
     }
 
     private fun InitButtons() {
@@ -62,7 +85,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ShowFirstScreen() {
-        gameState = GameState.FIRST_SCREEN
+        gameScreen = GameScreen.FIRST_SCREEN
+        gameState = GameState.GAME_VAIT
 
         backgroundImage.setImageResource(R.drawable.firstscreen)
         leftVerticalLineShadowImage.visibility = View.INVISIBLE
@@ -82,7 +106,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ShowSecondScreen() {
-        gameState = GameState.SECOND_SCREEN
+        gameScreen = GameScreen.SECOND_SCREEN
+        gameState = GameState.GAME_VAIT
 
         backgroundImage.setImageResource(R.drawable.background)
         leftVerticalLineShadowImage.visibility = View.INVISIBLE
@@ -102,7 +127,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ShowGameScreen() {
-        gameState = GameState.GAME_SCREEN
+        gameScreen = GameScreen.GAME_SCREEN
+        gameState = GameState.GAME_START
 
         backgroundImage.setImageResource(R.drawable.background)
         easyLevelBtn.visibility = View.INVISIBLE
@@ -110,6 +136,7 @@ class MainActivity : AppCompatActivity() {
         impossibleLevelBtn.visibility = View.INVISIBLE
         startGameBtn.visibility = View.INVISIBLE
         DrawLevel()
+        mainGameProcess()
     }
 
     //    Методы инициации кнопок
@@ -145,10 +172,17 @@ class MainActivity : AppCompatActivity() {
         thread.start()
     }
 
+    //    Непосредственно игра
+    private fun mainGameProcess() {
+
+
+
+    }
+
     //    Переопределение кнопки назад
     override fun onBackPressed() {
-        when (gameState) {
-            GameState.FIRST_SCREEN -> {
+        when (gameScreen) {
+            GameScreen.FIRST_SCREEN -> {
                 if (backPressedTime + 2000 > System.currentTimeMillis()) {
                     backToast.cancel()
                     super.onBackPressed()
@@ -160,13 +194,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 backPressedTime = System.currentTimeMillis()
             }
-            GameState.SECOND_SCREEN -> {
+            GameScreen.SECOND_SCREEN -> {
                 ShowFirstScreen()
             }
-            GameState.GAME_SCREEN -> {
+            GameScreen.GAME_SCREEN -> {
                 ShowSecondScreen()
             }
-            GameState.GAME_OVER_SCREEN -> {
+            GameScreen.GAME_OVER_SCREEN -> {
                 ShowSecondScreen()
             }
         }
