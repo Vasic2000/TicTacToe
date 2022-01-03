@@ -28,6 +28,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var topHorizontalLineImage: ImageView
     lateinit var bottomHorizontalLineImage: ImageView
 
+    lateinit var cell_1_1: ImageView
+    lateinit var cell_1_2: ImageView
+    lateinit var cell_1_3: ImageView
+    lateinit var cell_2_1: ImageView
+    lateinit var cell_2_2: ImageView
+    lateinit var cell_2_3: ImageView
+    lateinit var cell_3_1: ImageView
+    lateinit var cell_3_2: ImageView
+    lateinit var cell_3_3: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,11 +52,20 @@ class MainActivity : AppCompatActivity() {
         leftVerticalLineShadowImage = findViewById(R.id.left_line_shadow)
         rightVerticalLineShadowImage = findViewById(R.id.right_line_shadow)
         topHorizontalLineShadowImage = findViewById(R.id.top_line_shadow)
-        bottomHorizontalLineShadowImage = findViewById(R.id.botton_line_shadow)
+        bottomHorizontalLineShadowImage = findViewById(R.id.bottom_line_shadow)
         leftVerticalLineImage = findViewById(R.id.left_line)
         rightVerticalLineImage = findViewById(R.id.right_line)
         topHorizontalLineImage = findViewById(R.id.top_line)
-        bottomHorizontalLineImage = findViewById(R.id.botton_line)
+        bottomHorizontalLineImage = findViewById(R.id.bottom_line)
+        cell_1_1 = findViewById(R.id.Cell_1_1)
+        cell_1_2 = findViewById(R.id.Cell_1_2)
+        cell_1_3 = findViewById(R.id.Cell_1_3)
+        cell_2_1 = findViewById(R.id.Cell_2_1)
+        cell_2_2 = findViewById(R.id.Cell_2_2)
+        cell_2_3 = findViewById(R.id.Cell_2_3)
+        cell_3_1 = findViewById(R.id.Cell_3_1)
+        cell_3_2 = findViewById(R.id.Cell_3_2)
+        cell_3_3 = findViewById(R.id.Cell_3_3)
     }
 
     private fun InitButtons() {
