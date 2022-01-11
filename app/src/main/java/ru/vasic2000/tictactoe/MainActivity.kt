@@ -359,9 +359,20 @@ class MainActivity : AppCompatActivity() {
         cell33.setImageDrawable(null)
         cell33.visibility = View.VISIBLE
 
+//  С красотой
         val levelDraw = LevelDraw(this)
         val thread = Thread(levelDraw)
         thread.start()
+
+//  Без красоты
+//        leftVerticalLineShadowImage.visibility = View.VISIBLE
+//        leftVerticalLineImage.visibility = View.VISIBLE
+//        rightVerticalLineShadowImage.visibility = View.VISIBLE
+//        rightVerticalLineImage.visibility = View.VISIBLE
+//        topHorizontalLineShadowImage.visibility = View.VISIBLE
+//        topHorizontalLineImage.visibility = View.VISIBLE
+//        bottomHorizontalLineShadowImage.visibility = View.VISIBLE
+//        bottomHorizontalLineImage.visibility = View.VISIBLE
     }
 
     //    Непосредственно игра
@@ -372,34 +383,32 @@ class MainActivity : AppCompatActivity() {
 
         when (dificulty) {
             Dificulty.EASY -> {
-                gameState = easyGame()
+                easyGame()
             }
             Dificulty.HARD -> {
-                gameState = hardGame()
+                hardGame()
             }
             Dificulty.IMPOSSIBLE -> {
-                gameState = impossibleGame()
+                impossibleGame()
             }
         }
         showResultScreen(gameState)
     }
 
 
-    private fun easyGame(): GameState {
+    private fun easyGame() {
         do {
             if (gameState == GameState.GAME_AI_TURN)
                 randomWalk()
         } while (gameState == GameState.GAME_HUMAN_TURN || gameState == GameState.GAME_AI_TURN)
-
-        return gameState
     }
 
-    private fun hardGame(): GameState {
-        return GameState.GAME_WIN
+    private fun hardGame() {
+        gameState = GameState.GAME_WIN
     }
 
-    private fun impossibleGame(): GameState {
-        return GameState.GAME_WIN
+    private fun impossibleGame() {
+        gameState = GameState.GAME_LOOS
     }
 
 
