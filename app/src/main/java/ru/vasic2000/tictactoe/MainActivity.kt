@@ -5,26 +5,19 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
-import java.util.*
 import kotlin.system.exitProcess
 
 private var backPressedTime: Long = 0
 private lateinit var backToast: Toast
 private var gameScreen: GameScreen = GameScreen.FIRST_SCREEN
-private var random: Random = Random()
-
-const val SIGN_X = 'X'
-const val SIGN_O = 'O'
-const val SIGN_EMPTY = '.'
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var gameState : GameState
+    lateinit var gameState : GameState
     private lateinit var dificulty: Dificulty
     private lateinit var backgroundImage: ImageView
-
-    private var table: Array<CharArray>  = Array(3, { CharArray(3) })
 
     private lateinit var easyLevelBtn: Button
     private lateinit var hardLevelBtn: Button
@@ -50,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cell31: ImageView
     private lateinit var cell32: ImageView
     private lateinit var cell33: ImageView
+
+    lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,136 +83,12 @@ class MainActivity : AppCompatActivity() {
         hardLevelBtn = findViewById(R.id.hardLevelBtn)
         impossibleLevelBtn = findViewById(R.id.impossibleLevelBtn)
 
+        progressBar = findViewById(R.id.progressBar)
+
         btnStart()
         btnEasyGame()
         btnHardGame()
         btnImpossibleGame()
-
-        cell11.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(1,1)) {
-                table[0][0] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
-
-        cell12.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(1,2)) {
-                table[0][1] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
-
-        cell13.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(1,3)) {
-                table[0][2] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
-
-        cell21.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(2,1)) {
-                table[1][0] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
-
-        cell22.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(2,2)) {
-                table[1][1] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
-
-        cell23.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(2,3)) {
-                table[1][2] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
-
-        cell21.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(3,1)) {
-                table[2][0] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
-
-        cell22.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(3,2)) {
-                table[2][1] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
-
-        cell23.setOnClickListener {
-            if(gameState == GameState.GAME_HUMAN_TURN && isCellValid(3,3)) {
-                table[2][2] = SIGN_X
-                cell11.setImageResource(R.drawable.cross)
-                gameState = GameState.GAME_AI_TURN
-                //  Проверка, что Human выигрыал
-                if (checkWin(SIGN_X))
-                    gameState = GameState.GAME_LOOS
-                //  Проверка, что переполнено
-                if(isTableFull())
-                    gameState = GameState.GAME_DRAW
-            }
-        }
     }
 
     private fun showFirstScreen() {
@@ -263,7 +134,6 @@ class MainActivity : AppCompatActivity() {
         gameResultImage.visibility = View.INVISIBLE
 
         drawLevel()
-        mainGameProcess()
     }
 
     private fun showResultScreen(gameState: GameState) {
@@ -363,150 +233,6 @@ class MainActivity : AppCompatActivity() {
         val levelDraw = LevelDraw(this)
         val thread = Thread(levelDraw)
         thread.start()
-
-//  Без красоты
-//        leftVerticalLineShadowImage.visibility = View.VISIBLE
-//        leftVerticalLineImage.visibility = View.VISIBLE
-//        rightVerticalLineShadowImage.visibility = View.VISIBLE
-//        rightVerticalLineImage.visibility = View.VISIBLE
-//        topHorizontalLineShadowImage.visibility = View.VISIBLE
-//        topHorizontalLineImage.visibility = View.VISIBLE
-//        bottomHorizontalLineShadowImage.visibility = View.VISIBLE
-//        bottomHorizontalLineImage.visibility = View.VISIBLE
-    }
-
-    //    Непосредственно игра
-    private fun mainGameProcess() {
-        // игровая логика
-        // инициализация таблицы
-        initTable()
-
-        when (dificulty) {
-            Dificulty.EASY -> {
-                easyGame()
-            }
-            Dificulty.HARD -> {
-                hardGame()
-            }
-            Dificulty.IMPOSSIBLE -> {
-                impossibleGame()
-            }
-        }
-        showResultScreen(gameState)
-    }
-
-
-    private fun easyGame() {
-        do {
-            if (gameState == GameState.GAME_AI_TURN)
-                randomWalk()
-        } while (gameState == GameState.GAME_HUMAN_TURN || gameState == GameState.GAME_AI_TURN)
-    }
-
-    private fun hardGame() {
-        gameState = GameState.GAME_WIN
-    }
-
-    private fun impossibleGame() {
-        gameState = GameState.GAME_LOOS
-    }
-
-
-    //  Инициализация таблицы пустыми ячейками
-    private fun initTable() {
-        for (row in 0..2) for (col in 0..2)
-            table[row][col] = SIGN_EMPTY
-    }
-
-    //  Проверка не занята ли ячейка
-    fun isCellValid(x: Int, y: Int): Boolean {
-        return table[y][x] == SIGN_EMPTY
-    }
-
-    //  Случайный ход
-    fun randomWalk() {
-        var x: Int
-        var y: Int
-        do {
-            x = random.nextInt(3)
-            y = random.nextInt(3)
-        } while (!isCellValid(x, y))
-
-        table[y][x] = SIGN_O
-        redrawCross(x,y)
-
-    //  Проверка, что AI выигрыал
-        if (checkWin(SIGN_O))
-            gameState = GameState.GAME_LOOS
-    //  Проверка, что переполнено
-        if(isTableFull())
-            gameState = GameState.GAME_DRAW
-
-    }
-
-    private fun redrawCross(x: Int, y: Int) {
-        when(x) {
-            0 -> when(y) {
-                0 -> {
-                    cell11.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-                1 -> {
-                    cell12.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-                2 -> {
-                    cell13.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-            }
-            1 -> when(y) {
-                0 -> {
-                    cell21.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-                1 -> {
-                    cell22.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-                2 -> {
-                    cell23.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-            }
-            2 -> when(y) {
-                0 -> {
-                    cell31.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-                1 -> {
-                    cell32.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-                2 -> {
-                    cell33.setImageResource(R.drawable.cross)
-                    gameState = GameState.GAME_HUMAN_TURN
-                }
-            }
-        }
-    }
-
-    //  Проверка знака на выирыш
-    private fun checkWin(dot: Char): Boolean {
-        for (i in 0..2)
-            if (table[i][0] == dot && table[i][1] == dot && table[i][2] == dot ||
-            table[0][i] == dot && table[1][i] == dot && table[2][i] == dot)
-                return true
-
-        return table[0][0] == dot && table[1][1] == dot && table[2][2] == dot ||
-                table[2][0] == dot && table[1][1] == dot && table[0][2] == dot
-    }
-
-    //  Проверка, что таблица переполнилась
-    fun isTableFull(): Boolean {
-        for (row in 0..2) for (col in 0..2)
-            if (table[row][col] == SIGN_EMPTY) return false
-        return true
     }
 
     //    Переопределение кнопки назад
