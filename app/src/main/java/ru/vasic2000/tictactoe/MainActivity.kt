@@ -34,17 +34,22 @@ class MainActivity : AppCompatActivity() {
     lateinit var bottomHorizontalLineImage: ImageView
     lateinit var gameResultImage: ImageView
 
-    private lateinit var cell11: ImageView
-    private lateinit var cell12: ImageView
-    private lateinit var cell13: ImageView
-    private lateinit var cell21: ImageView
-    private lateinit var cell22: ImageView
-    private lateinit var cell23: ImageView
-    private lateinit var cell31: ImageView
-    private lateinit var cell32: ImageView
-    private lateinit var cell33: ImageView
+    lateinit var cell11: ImageView
+    lateinit var cell12: ImageView
+    lateinit var cell13: ImageView
+    lateinit var cell21: ImageView
+    lateinit var cell22: ImageView
+    lateinit var cell23: ImageView
+    lateinit var cell31: ImageView
+    lateinit var cell32: ImageView
+    lateinit var cell33: ImageView
 
     lateinit var progressBar: ProgressBar
+
+    var table: Array<CharArray> = Array(3, { CharArray(3) })
+    val SIGN_EMPTY = '.'
+    val SIGN_X = 'X'
+    val SIGN_0 = '0'
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -228,11 +233,37 @@ class MainActivity : AppCompatActivity() {
         cell32.visibility = View.VISIBLE
         cell33.setImageDrawable(null)
         cell33.visibility = View.VISIBLE
+        initTable()
 
 //  С красотой
-        val levelDraw = LevelDraw(this)
-        val thread = Thread(levelDraw)
+        val gameLogic = GameLogic(mainActivity = this)
+        val thread = Thread(gameLogic)
         thread.start()
+    }
+
+    //  Инициализация таблицы пустыми ячейками
+    fun initTable() {
+        for (row in 0..2) for (col in 0..2)
+            table[row][col] = SIGN_EMPTY
+    }
+
+    //  Проверка знака на выирыш
+    fun checkWin(dot: Char): Boolean {
+        for (i in 0..2)
+            if (table[i][0] == dot && table[i][1] == dot && table[i][2] == dot ||
+                table[0][i] == dot && table[1][i] == dot && table[2][i] == dot
+            )
+                return true
+
+        return table[0][0] == dot && table[1][1] == dot && table[2][2] == dot ||
+                table[2][0] == dot && table[1][1] == dot && table[0][2] == dot
+    }
+
+    //  Проверка, что таблица переполнилась
+    fun isTableFull(): Boolean {
+        for (row in 0..2) for (col in 0..2)
+            if (table[row][col] == SIGN_EMPTY) return false
+        return true
     }
 
     //    Переопределение кнопки назад
