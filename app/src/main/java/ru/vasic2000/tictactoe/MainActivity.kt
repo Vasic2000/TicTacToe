@@ -94,8 +94,65 @@ class MainActivity : AppCompatActivity() {
         btnEasyGame()
         btnHardGame()
         btnImpossibleGame()
+
+        cellsOnClickListeners()
     }
 
+    private fun cellsOnClickListeners() {
+        cell11.setOnClickListener {
+            if (isCellValid(0, 0)) {
+                table[0][0] = SIGN_0
+                redrawZero(0, 0)
+            }
+        }
+        cell12.setOnClickListener {
+            if (isCellValid(0, 1)) {
+                table[0][1] = SIGN_0
+                redrawZero(0, 1)
+            }
+        }
+        cell13.setOnClickListener {
+            if (isCellValid(0, 2)) {
+                table[0][2] = SIGN_0
+                redrawZero(0, 2)
+            }
+        }
+        cell21.setOnClickListener {
+            if (isCellValid(1, 0)) {
+                table[1][0] = SIGN_0
+                redrawZero(1, 0)
+            }
+        }
+        cell22.setOnClickListener {
+            if (isCellValid(1, 1)) {
+                table[1][1] = SIGN_0
+                redrawZero(1, 1)
+            }
+        }
+        cell23.setOnClickListener {
+            if (isCellValid(1, 2)) {
+                table[1][2] = SIGN_0
+                redrawZero(1, 2)
+            }
+        }
+        cell31.setOnClickListener {
+            if (isCellValid(2, 0)) {
+                table[2][0] = SIGN_0
+                redrawZero(2, 0)
+            }
+        }
+        cell32.setOnClickListener {
+            if (isCellValid(2, 1)) {
+                table[2][1] = SIGN_0
+                redrawZero(2, 1)
+            }
+        }
+        cell33.setOnClickListener {
+            if (isCellValid(2, 2)) {
+                redrawZero(2, 2)
+            }
+        }
+    }
     private fun showFirstScreen() {
         gameScreen = GameScreen.FIRST_SCREEN
         gameState = GameState.GAME_VAIT
@@ -235,8 +292,8 @@ class MainActivity : AppCompatActivity() {
         cell33.visibility = View.VISIBLE
         initTable()
 
-//  С красотой
-        val gameLogic = GameLogic(mainActivity = this)
+//        Отдельный от UI поток с логикой игры
+        val gameLogic = GameLogic(this)
         val thread = Thread(gameLogic)
         thread.start()
     }
@@ -245,6 +302,45 @@ class MainActivity : AppCompatActivity() {
     fun initTable() {
         for (row in 0..2) for (col in 0..2)
             table[row][col] = SIGN_EMPTY
+    }
+
+    fun redrawZero(x: Int, y: Int) {
+        when (x) {
+            0 -> when (y) {
+                0 -> {  cell11.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+                1 -> {  cell12.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+                2 -> {  cell13.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+            }
+
+            1 -> when (y) {
+                0 -> {  cell21.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+                1 -> {  cell22.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+                2 -> {  cell23.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+            }
+            2 -> when (y) {
+                0 -> {  cell31.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+                1 -> {  cell32.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+                2 -> {  cell33.setImageResource(R.drawable.zero)
+                        gameState = GameState.GAME_AI_TURN
+                }
+            }
+        }
     }
 
     //  Проверка знака на выирыш
@@ -264,6 +360,11 @@ class MainActivity : AppCompatActivity() {
         for (row in 0..2) for (col in 0..2)
             if (table[row][col] == SIGN_EMPTY) return false
         return true
+    }
+
+    //  Проверка, что ячейка пуста
+    fun isCellValid(x: Int, y: Int): Boolean {
+        return table[y][x] == SIGN_EMPTY
     }
 
     //    Переопределение кнопки назад

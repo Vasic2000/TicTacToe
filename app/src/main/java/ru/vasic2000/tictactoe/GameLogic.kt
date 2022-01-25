@@ -28,12 +28,12 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        mainActivity.leftVerticalLineImage.post(Runnable {
+        mainActivity.leftVerticalLineImage.post {
             mainActivity.leftVerticalLineImage.visibility = View.VISIBLE
-        })
-        mainActivity.leftVerticalLineShadowImage.post(Runnable {
+        }
+        mainActivity.leftVerticalLineShadowImage.post {
             mainActivity.leftVerticalLineShadowImage.visibility = View.VISIBLE
-        })
+        }
 
 //        Жду и рисую правую вертикальную палку
         try {
@@ -41,12 +41,12 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        mainActivity.rightVerticalLineImage.post(Runnable {
+        mainActivity.rightVerticalLineImage.post {
             mainActivity.rightVerticalLineImage.visibility = View.VISIBLE
-        })
-        mainActivity.rightVerticalLineShadowImage.post(Runnable {
+        }
+        mainActivity.rightVerticalLineShadowImage.post {
             mainActivity.rightVerticalLineShadowImage.visibility = View.VISIBLE
-        })
+        }
 
 //        Жду и рисую верхнюю горизонтальную палку
         try {
@@ -54,12 +54,12 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        mainActivity.topHorizontalLineImage.post(Runnable {
+        mainActivity.topHorizontalLineImage.post {
             mainActivity.topHorizontalLineImage.visibility = View.VISIBLE
-        })
-        mainActivity.topHorizontalLineShadowImage.post(Runnable {
+        }
+        mainActivity.topHorizontalLineShadowImage.post {
             mainActivity.topHorizontalLineShadowImage.visibility = View.VISIBLE
-        })
+        }
 
 //        Жду и рисую нижнюю горизонтальную палку
         try {
@@ -67,12 +67,12 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        mainActivity.bottomHorizontalLineImage.post(Runnable {
+        mainActivity.bottomHorizontalLineImage.post {
             mainActivity.bottomHorizontalLineImage.visibility = View.VISIBLE
-        })
-        mainActivity.bottomHorizontalLineShadowImage.post(Runnable {
+        }
+        mainActivity.bottomHorizontalLineShadowImage.post {
             mainActivity.bottomHorizontalLineShadowImage.visibility = View.VISIBLE
-        })
+        }
     }
 
     //  Проверка не занята ли ячейка
@@ -102,7 +102,6 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.INVISIBLE}
         redrawCross(x,y)
     }
-
 
     fun redrawCross(x: Int, y: Int) {
         when (x) {
@@ -136,17 +135,18 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             }
             2 -> when (y) {
                 0 -> {
-                    mainActivity.cell31.setImageResource(R.drawable.cross)
+                    mainActivity.cell31.post { mainActivity.cell31.setImageResource(R.drawable.cross) }
                     mainActivity.gameState = GameState.GAME_HUMAN_TURN
                 }
                 1 -> {
-                    mainActivity.cell32.setImageResource(R.drawable.cross)
+                    mainActivity.cell32.post { mainActivity.cell32.setImageResource(R.drawable.cross) }
                     mainActivity.gameState = GameState.GAME_HUMAN_TURN
                 }
                 2 -> {
-                    mainActivity.cell33.setImageResource(R.drawable.cross)
+                    mainActivity.cell33.post { mainActivity.cell33.setImageResource(R.drawable.cross) }
                     mainActivity.gameState = GameState.GAME_HUMAN_TURN
                 }
+
             }
         }
     }
