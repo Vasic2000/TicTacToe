@@ -18,6 +18,14 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
                 randomWalk()
             }
         }
+
+        mainActivity.rightVerticalLineImage.post {
+            mainActivity.rightVerticalLineImage.visibility = View.INVISIBLE
+        }
+        mainActivity.rightVerticalLineShadowImage.post {
+            mainActivity.rightVerticalLineShadowImage.visibility = View.INVISIBLE
+        }
+
     }
 
 
@@ -77,7 +85,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
     //  Проверка не занята ли ячейка
     fun isCellValid(x: Int, y: Int): Boolean {
-        return mainActivity.table[y][x] == mainActivity.SIGN_EMPTY
+        return mainActivity.isCellValid(x,y)
     }
 
     //  Случайный ход
@@ -90,7 +98,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         } while (!isCellValid(x, y))
 
         mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.VISIBLE}
-        mainActivity.table[y][x] = mainActivity.SIGN_0
+        mainActivity.table[x][y] = mainActivity.SIGN_X
 
 //        Типа думаю
         try {
@@ -146,7 +154,6 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
                     mainActivity.cell33.post { mainActivity.cell33.setImageResource(R.drawable.cross) }
                     mainActivity.gameState = GameState.GAME_HUMAN_TURN
                 }
-
             }
         }
     }

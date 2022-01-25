@@ -149,10 +149,12 @@ class MainActivity : AppCompatActivity() {
         }
         cell33.setOnClickListener {
             if (isCellValid(2, 2)) {
+                table[2][2] = SIGN_0
                 redrawZero(2, 2)
             }
         }
     }
+
     private fun showFirstScreen() {
         gameScreen = GameScreen.FIRST_SCREEN
         gameState = GameState.GAME_VAIT
@@ -364,7 +366,7 @@ class MainActivity : AppCompatActivity() {
 
     //  Проверка, что ячейка пуста
     fun isCellValid(x: Int, y: Int): Boolean {
-        return table[y][x] == SIGN_EMPTY
+        return table[x][y] == SIGN_EMPTY
     }
 
     //    Переопределение кнопки назад
