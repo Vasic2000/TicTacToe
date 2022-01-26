@@ -15,7 +15,7 @@ private var gameScreen: GameScreen = GameScreen.FIRST_SCREEN
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var gameState : GameState
+    private lateinit var gameState : GameState
     private lateinit var dificulty: Dificulty
     private lateinit var backgroundImage: ImageView
 
@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getSupportActionBar()?.hide()
         initImages()
         initButtons()
         showFirstScreen()
@@ -100,58 +99,80 @@ class MainActivity : AppCompatActivity() {
 
     private fun cellsOnClickListeners() {
         cell11.setOnClickListener {
-            if (isCellValid(0, 0)) {
+            if (isCellValid(0, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][0] = SIGN_0
                 redrawZero(0, 0)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
             }
         }
         cell12.setOnClickListener {
-            if (isCellValid(0, 1)) {
+            if (isCellValid(0, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][1] = SIGN_0
                 redrawZero(0, 1)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
             }
         }
         cell13.setOnClickListener {
-            if (isCellValid(0, 2)) {
+            if (isCellValid(0, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][2] = SIGN_0
                 redrawZero(0, 2)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
             }
         }
         cell21.setOnClickListener {
-            if (isCellValid(1, 0)) {
+            if (isCellValid(1, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][0] = SIGN_0
                 redrawZero(1, 0)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin('0')) gameState = GameState.GAME_WIN
             }
         }
         cell22.setOnClickListener {
-            if (isCellValid(1, 1)) {
+            if (isCellValid(1, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][1] = SIGN_0
                 redrawZero(1, 1)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin('0')) gameState = GameState.GAME_WIN
             }
         }
         cell23.setOnClickListener {
-            if (isCellValid(1, 2)) {
+            if (isCellValid(1, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][2] = SIGN_0
                 redrawZero(1, 2)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin('0')) gameState = GameState.GAME_WIN
             }
         }
         cell31.setOnClickListener {
-            if (isCellValid(2, 0)) {
+            if (isCellValid(2, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][0] = SIGN_0
                 redrawZero(2, 0)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
             }
         }
         cell32.setOnClickListener {
-            if (isCellValid(2, 1)) {
+            if (isCellValid(2, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][1] = SIGN_0
                 redrawZero(2, 1)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
             }
         }
         cell33.setOnClickListener {
-            if (isCellValid(2, 2)) {
+            if (isCellValid(2, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][2] = SIGN_0
                 redrawZero(2, 2)
+                if(isTableFull()) gameState = GameState.GAME_DRAW
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
             }
+        }
+        gameResultImage.setOnClickListener {
+            gameState = GameState.GAME_VAIT
+            showSecondScreen()
         }
     }
 
@@ -367,6 +388,14 @@ class MainActivity : AppCompatActivity() {
     //  Проверка, что ячейка пуста
     fun isCellValid(x: Int, y: Int): Boolean {
         return table[x][y] == SIGN_EMPTY
+    }
+
+    fun getGameState() : GameState {
+        return gameState
+    }
+
+    fun setGameState(status : GameState) {
+        gameState = status
     }
 
     //    Переопределение кнопки назад

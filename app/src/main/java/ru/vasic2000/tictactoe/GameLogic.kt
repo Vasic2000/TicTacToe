@@ -12,20 +12,33 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         drawLevel()
 
 //        Цикл, пока идёт игра
-        while(mainActivity.gameState == GameState.GAME_AI_TURN || mainActivity.gameState == GameState.GAME_HUMAN_TURN) {
-            if(mainActivity.gameState == GameState.GAME_AI_TURN) {
-//        Когда GameState == GAME_AI_TURN рисует фигуру за компьютер
+         do {
+            if(mainActivity.getGameState() == GameState.GAME_AI_TURN) {
                 randomWalk()
+            }
+        } while(mainActivity.getGameState() == GameState.GAME_AI_TURN ||
+             mainActivity.getGameState() == GameState.GAME_HUMAN_TURN)
+
+        if(mainActivity.getGameState() == GameState.GAME_DRAW) {
+            mainActivity.gameResultImage.post {
+                mainActivity.gameResultImage.setImageResource(R.drawable.draw)
+                mainActivity.gameResultImage.visibility = View.VISIBLE
             }
         }
 
-        mainActivity.rightVerticalLineImage.post {
-            mainActivity.rightVerticalLineImage.visibility = View.INVISIBLE
-        }
-        mainActivity.rightVerticalLineShadowImage.post {
-            mainActivity.rightVerticalLineShadowImage.visibility = View.INVISIBLE
+        if(mainActivity.getGameState() == GameState.GAME_WIN) {
+            mainActivity.gameResultImage.post {
+                mainActivity.gameResultImage.setImageResource(R.drawable.win)
+                mainActivity.gameResultImage.visibility = View.VISIBLE
+            }
         }
 
+        if(mainActivity.getGameState() == GameState.GAME_LOOS) {
+            mainActivity.gameResultImage.post {
+                mainActivity.gameResultImage.setImageResource(R.drawable.loss)
+                mainActivity.gameResultImage.visibility = View.VISIBLE
+            }
+        }
     }
 
 
@@ -109,6 +122,8 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
         mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.INVISIBLE}
         redrawCross(x,y)
+        if(mainActivity.isTableFull()) mainActivity.setGameState(GameState.GAME_DRAW)
+        if(mainActivity.checkWin(mainActivity.SIGN_X)) mainActivity.setGameState(GameState.GAME_LOOS)
     }
 
     fun redrawCross(x: Int, y: Int) {
@@ -116,46 +131,45 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             0 -> when (y) {
                 0 -> {
                     mainActivity.cell11.post { mainActivity.cell11.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
                     mainActivity.cell12.post { mainActivity.cell12.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
                     mainActivity.cell13.post { mainActivity.cell13.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
             }
             1 -> when (y) {
                 0 -> {
                     mainActivity.cell21.post { mainActivity.cell21.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
                     mainActivity.cell22.post { mainActivity.cell22.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
                     mainActivity.cell23.post { mainActivity.cell23.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
             }
             2 -> when (y) {
                 0 -> {
                     mainActivity.cell31.post { mainActivity.cell31.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
                     mainActivity.cell32.post { mainActivity.cell32.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
                     mainActivity.cell33.post { mainActivity.cell33.setImageResource(R.drawable.cross) }
-                    mainActivity.gameState = GameState.GAME_HUMAN_TURN
+                    mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
             }
         }
     }
 }
-
