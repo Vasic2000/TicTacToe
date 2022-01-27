@@ -5,47 +5,51 @@ import java.util.*
 
 class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
-    val random = Random()
+    private val random = Random()
 
     override fun run() {
-
         drawLevel()
+        gameLoop()
+    }
 
-//        Цикл, пока идёт игра
-         do {
-            if(mainActivity.getGameState() == GameState.GAME_AI_TURN) {
+    private fun gameLoop() {
+        //        Цикл, пока идёт игра
+        while((mainActivity.getGameState() == (GameState.GAME_AI_TURN))or(mainActivity.getGameState() == (GameState.GAME_HUMAN_TURN))) {
+            println("inside цикл = " + mainActivity.getGameState())
+            if (mainActivity.getGameState() == GameState.GAME_AI_TURN) {
                 randomWalk()
             }
-        } while(mainActivity.getGameState() == GameState.GAME_AI_TURN ||
-             mainActivity.getGameState() == GameState.GAME_HUMAN_TURN)
+        }
+        println("Выпал из цикла = " + mainActivity.getGameState())
 
-        if(mainActivity.getGameState() == GameState.GAME_DRAW) {
+        if (mainActivity.getGameState() == GameState.GAME_DRAW) {
             mainActivity.gameResultImage.post {
-                mainActivity.gameResultImage.setImageResource(R.drawable.draw)
+                mainActivity.showResultScreen(GameState.GAME_DRAW)
                 mainActivity.gameResultImage.visibility = View.VISIBLE
             }
         }
 
-        if(mainActivity.getGameState() == GameState.GAME_WIN) {
+        if (mainActivity.getGameState() == GameState.GAME_WIN) {
             mainActivity.gameResultImage.post {
-                mainActivity.gameResultImage.setImageResource(R.drawable.win)
+                mainActivity.showResultScreen(GameState.GAME_WIN)
                 mainActivity.gameResultImage.visibility = View.VISIBLE
             }
         }
 
-        if(mainActivity.getGameState() == GameState.GAME_LOOS) {
+        if (mainActivity.getGameState() == GameState.GAME_LOOS) {
             mainActivity.gameResultImage.post {
-                mainActivity.gameResultImage.setImageResource(R.drawable.loss)
+                mainActivity.showResultScreen(GameState.GAME_LOOS)
                 mainActivity.gameResultImage.visibility = View.VISIBLE
             }
         }
+        println("Выход совсем = " + mainActivity.getGameState())
     }
 
 
     private fun drawLevel() {
         //        Жду и рисую левую вертикальную палку
         try {
-            Thread.sleep(350)
+            Thread.sleep(250)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -58,7 +62,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
 //        Жду и рисую правую вертикальную палку
         try {
-            Thread.sleep(350)
+            Thread.sleep(250)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -71,7 +75,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
 //        Жду и рисую верхнюю горизонтальную палку
         try {
-            Thread.sleep(350)
+            Thread.sleep(250)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -84,7 +88,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
 //        Жду и рисую нижнюю горизонтальную палку
         try {
-            Thread.sleep(350)
+            Thread.sleep(250)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -122,6 +126,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
         mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.INVISIBLE}
         redrawCross(x,y)
+        println(mainActivity.getGameState())
         if(mainActivity.isTableFull()) mainActivity.setGameState(GameState.GAME_DRAW)
         if(mainActivity.checkWin(mainActivity.SIGN_X)) mainActivity.setGameState(GameState.GAME_LOOS)
     }

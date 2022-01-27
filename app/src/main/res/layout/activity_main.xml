@@ -434,11 +434,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/left_line"
         app:layout_constraintEnd_toEndOf="@+id/top_line"
         app:layout_constraintStart_toStartOf="@+id/top_line"
-        app:layout_constraintTop_toTopOf="@+id/left_line"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

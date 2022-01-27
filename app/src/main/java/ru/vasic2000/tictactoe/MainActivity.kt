@@ -1,12 +1,12 @@
 package ru.vasic2000.tictactoe
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlin.system.exitProcess
 
 private var backPressedTime: Long = 0
@@ -15,10 +15,11 @@ private var gameScreen: GameScreen = GameScreen.FIRST_SCREEN
 
 class MainActivity : AppCompatActivity() {
 
+    @Volatile
     private lateinit var gameState : GameState
+
     private lateinit var dificulty: Dificulty
     private lateinit var backgroundImage: ImageView
-
     private lateinit var easyLevelBtn: Button
     private lateinit var hardLevelBtn: Button
     private lateinit var impossibleLevelBtn: Button
@@ -102,72 +103,90 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(0, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][0] = SIGN_0
                 redrawZero(0, 0)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
                 if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         cell12.setOnClickListener {
             if (isCellValid(0, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][1] = SIGN_0
                 redrawZero(0, 1)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
                 if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         cell13.setOnClickListener {
             if (isCellValid(0, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][2] = SIGN_0
                 redrawZero(0, 2)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
                 if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         cell21.setOnClickListener {
             if (isCellValid(1, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][0] = SIGN_0
                 redrawZero(1, 0)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
-                if(checkWin('0')) gameState = GameState.GAME_WIN
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         cell22.setOnClickListener {
             if (isCellValid(1, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][1] = SIGN_0
                 redrawZero(1, 1)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
-                if(checkWin('0')) gameState = GameState.GAME_WIN
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         cell23.setOnClickListener {
             if (isCellValid(1, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][2] = SIGN_0
                 redrawZero(1, 2)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
-                if(checkWin('0')) gameState = GameState.GAME_WIN
+                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         cell31.setOnClickListener {
             if (isCellValid(2, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][0] = SIGN_0
                 redrawZero(2, 0)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
                 if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         cell32.setOnClickListener {
             if (isCellValid(2, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][1] = SIGN_0
                 redrawZero(2, 1)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
                 if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         cell33.setOnClickListener {
             if (isCellValid(2, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][2] = SIGN_0
                 redrawZero(2, 2)
-                if(isTableFull()) gameState = GameState.GAME_DRAW
                 if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                else if(isTableFull()) gameState = GameState.GAME_DRAW
+                else gameState = GameState.GAME_AI_TURN
+                println(gameState)
             }
         }
         gameResultImage.setOnClickListener {
@@ -221,10 +240,9 @@ class MainActivity : AppCompatActivity() {
         drawLevel()
     }
 
-    private fun showResultScreen(gameState: GameState) {
+    fun showResultScreen(gameState: GameState) {
         gameScreen = GameScreen.GAME_OVER_SCREEN
         backgroundImage.setImageResource(R.drawable.background)
-        hideGameElements()
         gameResultImage.visibility = View.VISIBLE
 
         when(gameState) {
@@ -241,7 +259,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 //  Повторяющаяся операция спрятать элементы игрового поля
-    private fun hideGameElements() {
+fun hideGameElements() {
         leftVerticalLineShadowImage.visibility = View.INVISIBLE
         rightVerticalLineShadowImage.visibility = View.INVISIBLE
         topHorizontalLineShadowImage.visibility = View.INVISIBLE
@@ -331,36 +349,27 @@ class MainActivity : AppCompatActivity() {
         when (x) {
             0 -> when (y) {
                 0 -> {  cell11.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
                 }
                 1 -> {  cell12.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
                 }
                 2 -> {  cell13.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
                 }
             }
 
             1 -> when (y) {
                 0 -> {  cell21.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
                 }
                 1 -> {  cell22.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
                 }
                 2 -> {  cell23.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
                 }
             }
             2 -> when (y) {
                 0 -> {  cell31.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
-                }
+                 }
                 1 -> {  cell32.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
                 }
                 2 -> {  cell33.setImageResource(R.drawable.zero)
-                        gameState = GameState.GAME_AI_TURN
                 }
             }
         }
@@ -390,13 +399,17 @@ class MainActivity : AppCompatActivity() {
         return table[x][y] == SIGN_EMPTY
     }
 
+    @Synchronized
     fun getGameState() : GameState {
         return gameState
     }
 
+    @Synchronized
     fun setGameState(status : GameState) {
         gameState = status
     }
+
+
 
     //    Переопределение кнопки назад
     override fun onBackPressed() {
