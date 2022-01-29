@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var bottomHorizontalLineImage: ImageView
     lateinit var gameResultImage: ImageView
 
+    lateinit var zero_select_picture: ImageView
+    lateinit var cross_select_picture: ImageView
+
     lateinit var cell11: ImageView
     lateinit var cell12: ImageView
     lateinit var cell13: ImageView
@@ -48,9 +51,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var progressBar: ProgressBar
 
     var table: Array<CharArray> = Array(3, { CharArray(3) })
+
     val SIGN_EMPTY = '.'
     val SIGN_X = 'X'
     val SIGN_0 = '0'
+
+    var SIGN_HUMAN = 'X'
+    var SIGN_AI= '0'
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +78,10 @@ class MainActivity : AppCompatActivity() {
         topHorizontalLineImage = findViewById(R.id.top_line)
         bottomHorizontalLineImage = findViewById(R.id.bottom_line)
         gameResultImage = findViewById(R.id.gameResultScreen)
+
+        zero_select_picture = findViewById(R.id.zero_select_picture)
+        cross_select_picture = findViewById(R.id.cross_select_picture)
+
         cell11 = findViewById(R.id.Cell_1_1)
         cell12 = findViewById(R.id.Cell_1_2)
         cell13 = findViewById(R.id.Cell_1_3)
@@ -95,15 +106,42 @@ class MainActivity : AppCompatActivity() {
         btnHardGame()
         btnImpossibleGame()
 
+        crossSelect()
+        zeroSelect()
+        gameResult()
+
         cellsOnClickListeners()
+    }
+
+    private fun gameResult() {
+        gameResultImage.setOnClickListener {
+            gameState = GameState.GAME_VAIT
+            showSecondScreen()
+        }
+    }
+
+    private fun zeroSelect() {
+        zero_select_picture.setOnClickListener {
+            SIGN_HUMAN = SIGN_0
+            SIGN_AI = SIGN_X
+            showGameScreen()
+        }
+    }
+
+    private fun crossSelect() {
+        cross_select_picture.setOnClickListener {
+            SIGN_HUMAN = SIGN_X
+            SIGN_AI = SIGN_0
+            showGameScreen()
+        }
     }
 
     private fun cellsOnClickListeners() {
         cell11.setOnClickListener {
             if (isCellValid(0, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[0][0] = SIGN_0
-                redrawZero(0, 0)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[0][0] = SIGN_HUMAN
+                redrawHuman(0, 0)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
@@ -111,9 +149,9 @@ class MainActivity : AppCompatActivity() {
         }
         cell12.setOnClickListener {
             if (isCellValid(0, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[0][1] = SIGN_0
-                redrawZero(0, 1)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[0][1] = SIGN_HUMAN
+                redrawHuman(0, 1)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
@@ -121,9 +159,9 @@ class MainActivity : AppCompatActivity() {
         }
         cell13.setOnClickListener {
             if (isCellValid(0, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[0][2] = SIGN_0
-                redrawZero(0, 2)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[0][2] = SIGN_HUMAN
+                redrawHuman(0, 2)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
@@ -131,9 +169,9 @@ class MainActivity : AppCompatActivity() {
         }
         cell21.setOnClickListener {
             if (isCellValid(1, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[1][0] = SIGN_0
-                redrawZero(1, 0)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[1][0] = SIGN_HUMAN
+                redrawHuman(1, 0)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
@@ -141,9 +179,9 @@ class MainActivity : AppCompatActivity() {
         }
         cell22.setOnClickListener {
             if (isCellValid(1, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[1][1] = SIGN_0
-                redrawZero(1, 1)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[1][1] = SIGN_HUMAN
+                redrawHuman(1, 1)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
@@ -151,9 +189,9 @@ class MainActivity : AppCompatActivity() {
         }
         cell23.setOnClickListener {
             if (isCellValid(1, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[1][2] = SIGN_0
-                redrawZero(1, 2)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[1][2] = SIGN_HUMAN
+                redrawHuman(1, 2)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
@@ -161,9 +199,9 @@ class MainActivity : AppCompatActivity() {
         }
         cell31.setOnClickListener {
             if (isCellValid(2, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[2][0] = SIGN_0
-                redrawZero(2, 0)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[2][0] = SIGN_HUMAN
+                redrawHuman(2, 0)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
@@ -171,9 +209,9 @@ class MainActivity : AppCompatActivity() {
         }
         cell32.setOnClickListener {
             if (isCellValid(2, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[2][1] = SIGN_0
-                redrawZero(2, 1)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[2][1] = SIGN_HUMAN
+                redrawHuman(2, 1)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
@@ -181,17 +219,13 @@ class MainActivity : AppCompatActivity() {
         }
         cell33.setOnClickListener {
             if (isCellValid(2, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
-                table[2][2] = SIGN_0
-                redrawZero(2, 2)
-                if(checkWin(SIGN_0)) gameState = GameState.GAME_WIN
+                table[2][2] = SIGN_HUMAN
+                redrawHuman(2, 2)
+                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
                 else if(isTableFull()) gameState = GameState.GAME_DRAW
                 else gameState = GameState.GAME_AI_TURN
                 println(gameState)
             }
-        }
-        gameResultImage.setOnClickListener {
-            gameState = GameState.GAME_VAIT
-            showSecondScreen()
         }
     }
 
@@ -200,6 +234,9 @@ class MainActivity : AppCompatActivity() {
         gameState = GameState.GAME_VAIT
 
         backgroundImage.setImageResource(R.drawable.firstscreen)
+
+        zero_select_picture.visibility = View.INVISIBLE
+        cross_select_picture.visibility = View.INVISIBLE
 
         hideGameElements()
 
@@ -216,6 +253,9 @@ class MainActivity : AppCompatActivity() {
         gameState = GameState.GAME_VAIT
 
         backgroundImage.setImageResource(R.drawable.background)
+
+        zero_select_picture.visibility = View.INVISIBLE
+        cross_select_picture.visibility = View.INVISIBLE
 
         hideGameElements()
         gameResultImage.visibility = View.INVISIBLE
@@ -237,7 +277,25 @@ class MainActivity : AppCompatActivity() {
         startGameBtn.visibility = View.INVISIBLE
         gameResultImage.visibility = View.INVISIBLE
 
+        zero_select_picture.visibility = View.INVISIBLE
+        cross_select_picture.visibility = View.INVISIBLE
+
         drawLevel()
+    }
+
+    private fun showSignSelectScreen() {
+        gameScreen = GameScreen.SIGN_SELECT_SCREEN
+
+        backgroundImage.setImageResource(R.drawable.background)
+        easyLevelBtn.visibility = View.INVISIBLE
+        hardLevelBtn.visibility = View.INVISIBLE
+        impossibleLevelBtn.visibility = View.INVISIBLE
+        startGameBtn.visibility = View.INVISIBLE
+        gameResultImage.visibility = View.INVISIBLE
+
+        zero_select_picture.visibility = View.VISIBLE
+        cross_select_picture.visibility = View.VISIBLE
+
     }
 
     fun showResultScreen(gameState: GameState) {
@@ -291,7 +349,7 @@ fun hideGameElements() {
         easyLevelBtn.setOnClickListener {
             gameState = GameState.GAME_HUMAN_TURN
             dificulty = Dificulty.EASY
-            showGameScreen()
+            showSignSelectScreen()
         }
     }
 
@@ -299,7 +357,7 @@ fun hideGameElements() {
         hardLevelBtn.setOnClickListener {
             gameState = GameState.GAME_HUMAN_TURN
             dificulty = Dificulty.HARD
-            showGameScreen()
+            showSignSelectScreen()
         }
     }
 
@@ -307,7 +365,7 @@ fun hideGameElements() {
         impossibleLevelBtn.setOnClickListener {
             gameState = GameState.GAME_AI_TURN
             dificulty = Dificulty.IMPOSSIBLE
-            showGameScreen()
+            showSignSelectScreen()
         }
     }
 
@@ -345,31 +403,67 @@ fun hideGameElements() {
             table[row][col] = SIGN_EMPTY
     }
 
-    fun redrawZero(x: Int, y: Int) {
+    fun redrawHuman(x: Int, y: Int) {
         when (x) {
             0 -> when (y) {
-                0 -> {  cell11.setImageResource(R.drawable.zero)
+                0 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                        cell11.setImageResource(R.drawable.cross)
+                    else
+                        cell11.setImageResource(R.drawable.zero)
                 }
-                1 -> {  cell12.setImageResource(R.drawable.zero)
+                1 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                    cell12.setImageResource(R.drawable.cross)
+                else
+                    cell12.setImageResource(R.drawable.zero)
                 }
-                2 -> {  cell13.setImageResource(R.drawable.zero)
+                2 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                    cell13.setImageResource(R.drawable.cross)
+                else
+                    cell13.setImageResource(R.drawable.zero)
                 }
             }
 
             1 -> when (y) {
-                0 -> {  cell21.setImageResource(R.drawable.zero)
+                0 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                        cell21.setImageResource(R.drawable.cross)
+                    else
+                        cell21.setImageResource(R.drawable.zero)
                 }
-                1 -> {  cell22.setImageResource(R.drawable.zero)
+                1 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                        cell22.setImageResource(R.drawable.cross)
+                    else
+                        cell22.setImageResource(R.drawable.zero)
                 }
-                2 -> {  cell23.setImageResource(R.drawable.zero)
+                2 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                        cell23.setImageResource(R.drawable.cross)
+                    else
+                        cell23.setImageResource(R.drawable.zero)
                 }
             }
             2 -> when (y) {
-                0 -> {  cell31.setImageResource(R.drawable.zero)
-                 }
-                1 -> {  cell32.setImageResource(R.drawable.zero)
+                0 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                        cell31.setImageResource(R.drawable.cross)
+                    else
+                        cell31.setImageResource(R.drawable.zero)
                 }
-                2 -> {  cell33.setImageResource(R.drawable.zero)
+                1 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                        cell32.setImageResource(R.drawable.cross)
+                    else
+                        cell32.setImageResource(R.drawable.zero)
+                }
+                2 -> {
+                    if(SIGN_HUMAN == SIGN_X)
+                        cell33.setImageResource(R.drawable.cross)
+                    else
+                        cell33.setImageResource(R.drawable.zero)
                 }
             }
         }
@@ -428,6 +522,9 @@ fun hideGameElements() {
             }
             GameScreen.SECOND_SCREEN -> {
                 showFirstScreen()
+            }
+            GameScreen.SIGN_SELECT_SCREEN -> {
+                showSecondScreen()
             }
             GameScreen.GAME_SCREEN -> {
                 showSecondScreen()

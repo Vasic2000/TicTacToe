@@ -115,7 +115,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         } while (!isCellValid(x, y))
 
         mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.VISIBLE}
-        mainActivity.table[x][y] = mainActivity.SIGN_X
+        mainActivity.table[x][y] = mainActivity.SIGN_AI
 
 //        Типа думаю
         try {
@@ -125,53 +125,98 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         }
 
         mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.INVISIBLE}
-        redrawCross(x,y)
+        redrawAI(x,y)
         println(mainActivity.getGameState())
+        if(mainActivity.checkWin(mainActivity.SIGN_AI)) mainActivity.setGameState(GameState.GAME_LOOS)
         if(mainActivity.isTableFull()) mainActivity.setGameState(GameState.GAME_DRAW)
-        if(mainActivity.checkWin(mainActivity.SIGN_X)) mainActivity.setGameState(GameState.GAME_LOOS)
     }
 
-    fun redrawCross(x: Int, y: Int) {
+    fun redrawAI(x: Int, y: Int) {
         when (x) {
             0 -> when (y) {
                 0 -> {
-                    mainActivity.cell11.post { mainActivity.cell11.setImageResource(R.drawable.cross) }
+                    mainActivity.cell11.post {
+                    if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        mainActivity.cell11.setImageResource(R.drawable.cross)
+                    else
+                        mainActivity.cell11.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
-                    mainActivity.cell12.post { mainActivity.cell12.setImageResource(R.drawable.cross) }
+                    mainActivity.cell12.post {
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                            mainActivity.cell12.setImageResource(R.drawable.cross)
+                        else
+                            mainActivity.cell12.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
-                    mainActivity.cell13.post { mainActivity.cell13.setImageResource(R.drawable.cross) }
+                    mainActivity.cell13.post {
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                            mainActivity.cell13.setImageResource(R.drawable.cross)
+                        else
+                            mainActivity.cell13.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
             }
             1 -> when (y) {
                 0 -> {
-                    mainActivity.cell21.post { mainActivity.cell21.setImageResource(R.drawable.cross) }
+                    mainActivity.cell21.post {
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                            mainActivity.cell21.setImageResource(R.drawable.cross)
+                        else
+                            mainActivity.cell21.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
-                    mainActivity.cell22.post { mainActivity.cell22.setImageResource(R.drawable.cross) }
+                    mainActivity.cell22.post {
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                            mainActivity.cell22.setImageResource(R.drawable.cross)
+                        else
+                            mainActivity.cell22.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
-                    mainActivity.cell23.post { mainActivity.cell23.setImageResource(R.drawable.cross) }
+                    mainActivity.cell23.post {
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        mainActivity.cell23.setImageResource(R.drawable.cross)
+                    else
+                        mainActivity.cell23.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
             }
             2 -> when (y) {
                 0 -> {
-                    mainActivity.cell31.post { mainActivity.cell31.setImageResource(R.drawable.cross) }
+                    mainActivity.cell31.post {
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                            mainActivity.cell31.setImageResource(R.drawable.cross)
+                        else
+                            mainActivity.cell31.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
-                    mainActivity.cell32.post { mainActivity.cell32.setImageResource(R.drawable.cross) }
+                    mainActivity.cell32.post {
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                            mainActivity.cell32.setImageResource(R.drawable.cross)
+                        else
+                            mainActivity.cell32.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
-                    mainActivity.cell33.post { mainActivity.cell33.setImageResource(R.drawable.cross) }
+                    mainActivity.cell33.post {
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                            mainActivity.cell33.setImageResource(R.drawable.cross)
+                        else
+                            mainActivity.cell33.setImageResource(R.drawable.zero)
+                    }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
             }
