@@ -101,7 +101,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
     }
 
     //  Проверка не занята ли ячейка
-    fun isCellValid(x: Int, y: Int): Boolean {
+    private fun isCellValid(x: Int, y: Int): Boolean {
         return mainActivity.isCellValid(x,y)
     }
 
@@ -117,7 +117,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.VISIBLE}
         mainActivity.table[x][y] = mainActivity.SIGN_AI
 
-//        Типа думаю
+    //  Типа думаю
         try {
             Thread.sleep(500)
         } catch (e: InterruptedException) {
@@ -131,7 +131,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         if(mainActivity.isTableFull()) mainActivity.setGameState(GameState.GAME_DRAW)
     }
 
-    fun redrawAI(x: Int, y: Int) {
+    private fun redrawAI(x: Int, y: Int) {
         when (x) {
             0 -> when (y) {
                 0 -> {
