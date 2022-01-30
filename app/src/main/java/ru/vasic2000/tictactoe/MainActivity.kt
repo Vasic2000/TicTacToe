@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         zero_select_picture.setOnClickListener {
             SIGN_HUMAN = SIGN_0
             SIGN_AI = SIGN_X
-            showGameScreen()
+            startGame()
         }
     }
 
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         cross_select_picture.setOnClickListener {
             SIGN_HUMAN = SIGN_X
             SIGN_AI = SIGN_0
-            showGameScreen()
+            startGame()
         }
     }
 
@@ -267,7 +267,7 @@ class MainActivity : AppCompatActivity() {
         impossibleLevelBtn.visibility = View.VISIBLE
     }
 
-    private fun showGameScreen() {
+    fun showGameScreen() {
         gameScreen = GameScreen.GAME_SCREEN
 
         backgroundImage.setImageResource(R.drawable.background)
@@ -279,8 +279,6 @@ class MainActivity : AppCompatActivity() {
 
         zero_select_picture.visibility = View.INVISIBLE
         cross_select_picture.visibility = View.INVISIBLE
-
-        drawLevel()
     }
 
     private fun showSignSelectScreen() {
@@ -370,7 +368,7 @@ fun hideGameElements() {
     }
 
     //    Метод последовательной прорисовки поля, серез ThreadPost
-    private fun drawLevel() {
+    private fun startGame() {
         cell11.setImageDrawable(null)
         cell11.visibility = View.VISIBLE
         cell12.setImageDrawable(null)
