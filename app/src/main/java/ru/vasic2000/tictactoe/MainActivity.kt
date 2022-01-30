@@ -304,9 +304,11 @@ class MainActivity : AppCompatActivity() {
         when(gameState) {
             GameState.GAME_WIN -> {
                 gameResultImage.setImageResource(R.drawable.win)
+                redrawWinCombination(findWinSheme(SIGN_HUMAN), SIGN_HUMAN)
             }
             GameState.GAME_LOOS -> {
                 gameResultImage.setImageResource(R.drawable.loss)
+                redrawWinCombination(findWinSheme(SIGN_AI), SIGN_AI)
             }
             GameState.GAME_DRAW -> {
                 gameResultImage.setImageResource(R.drawable.draw)
@@ -314,7 +316,100 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//  Повторяющаяся операция спрятать элементы игрового поля
+    private fun redrawWinCombination(findWinSheme: WinSheme, winSign: Char) {
+            when (findWinSheme) {
+                WinSheme.row1 -> {
+                    if (winSign == SIGN_X) {
+                        cell11.setImageResource(R.drawable.cross_win)
+                        cell12.setImageResource(R.drawable.cross_win)
+                        cell13.setImageResource(R.drawable.cross_win)
+                    } else {
+                        cell11.setImageResource(R.drawable.zero_win)
+                        cell12.setImageResource(R.drawable.zero_win)
+                        cell13.setImageResource(R.drawable.zero_win)
+                    }
+                }
+                WinSheme.row2 -> {
+                    if (winSign == SIGN_X) {
+                        cell21.setImageResource(R.drawable.cross_win)
+                        cell22.setImageResource(R.drawable.cross_win)
+                        cell23.setImageResource(R.drawable.cross_win)
+                    } else {
+                        cell21.setImageResource(R.drawable.zero_win)
+                        cell22.setImageResource(R.drawable.zero_win)
+                        cell23.setImageResource(R.drawable.zero_win)
+                    }
+                }
+                WinSheme.row3 -> {
+                    if (winSign == SIGN_X) {
+                        cell31.setImageResource(R.drawable.cross_win)
+                        cell32.setImageResource(R.drawable.cross_win)
+                        cell33.setImageResource(R.drawable.cross_win)
+                    } else {
+                        cell31.setImageResource(R.drawable.zero_win)
+                        cell32.setImageResource(R.drawable.zero_win)
+                        cell33.setImageResource(R.drawable.zero_win)
+                    }
+                }
+                WinSheme.col1 -> {
+                    if (winSign == SIGN_X) {
+                        cell11.setImageResource(R.drawable.cross_win)
+                        cell21.setImageResource(R.drawable.cross_win)
+                        cell31.setImageResource(R.drawable.cross_win)
+                    } else {
+                        cell11.setImageResource(R.drawable.zero_win)
+                        cell21.setImageResource(R.drawable.zero_win)
+                        cell31.setImageResource(R.drawable.zero_win)
+                    }
+                }
+                WinSheme.col2 -> {
+                    if (winSign == SIGN_X) {
+                        cell12.setImageResource(R.drawable.cross_win)
+                        cell22.setImageResource(R.drawable.cross_win)
+                        cell32.setImageResource(R.drawable.cross_win)
+                    } else {
+                        cell12.setImageResource(R.drawable.zero_win)
+                        cell22.setImageResource(R.drawable.zero_win)
+                        cell33.setImageResource(R.drawable.zero_win)
+                    }
+                }
+                WinSheme.col3 -> {
+                    if (winSign == SIGN_X) {
+                        cell31.setImageResource(R.drawable.cross_win)
+                        cell32.setImageResource(R.drawable.cross_win)
+                        cell33.setImageResource(R.drawable.cross_win)
+                    } else {
+                        cell31.setImageResource(R.drawable.zero_win)
+                        cell32.setImageResource(R.drawable.zero_win)
+                        cell33.setImageResource(R.drawable.zero_win)
+                    }
+                }
+                WinSheme.d1 -> {
+                    if (winSign == SIGN_X) {
+                        cell11.setImageResource(R.drawable.cross_win)
+                        cell22.setImageResource(R.drawable.cross_win)
+                        cell33.setImageResource(R.drawable.cross_win)
+                    } else {
+                        cell11.setImageResource(R.drawable.zero_win)
+                        cell22.setImageResource(R.drawable.zero_win)
+                        cell33.setImageResource(R.drawable.zero_win)
+                    }
+                }
+                WinSheme.d2 -> {
+                    if (winSign == SIGN_X) {
+                        cell31.setImageResource(R.drawable.cross_win)
+                        cell22.setImageResource(R.drawable.cross_win)
+                        cell13.setImageResource(R.drawable.cross_win)
+                    } else {
+                        cell31.setImageResource(R.drawable.zero_win)
+                        cell22.setImageResource(R.drawable.zero_win)
+                        cell13.setImageResource(R.drawable.zero_win)
+                    }
+                }
+            }
+    }
+
+    //  Повторяющаяся операция спрятать элементы игрового поля
 fun hideGameElements() {
         leftVerticalLineShadowImage.visibility = View.INVISIBLE
         rightVerticalLineShadowImage.visibility = View.INVISIBLE
@@ -465,6 +560,23 @@ fun hideGameElements() {
                 }
             }
         }
+    }
+
+    //  Поиск выигрышной комбинации
+    fun findWinSheme(dot: Char): WinSheme {
+       if(table[0][0] == dot && table[0][1] == dot && table[0][2] == dot) return WinSheme.row1
+        if(table[1][0] == dot && table[1][1] == dot && table[1][2] == dot) return WinSheme.row2
+        if(table[2][0] == dot && table[2][1] == dot && table[2][2] == dot) return WinSheme.row3
+
+        if(table[0][0] == dot && table[1][0] == dot && table[2][0] == dot) return WinSheme.col1
+        if(table[1][0] == dot && table[1][1] == dot && table[2][1] == dot) return WinSheme.col2
+        if(table[2][0] == dot && table[2][1] == dot && table[2][2] == dot) return WinSheme.col3
+
+        if(table[0][0] == dot && table[1][1] == dot && table[2][2] == dot) return WinSheme.d1
+        if(table[2][0] == dot && table[1][1] == dot && table[0][2] == dot) return WinSheme.d2
+
+    //  Не должен сюда попадать, для тестов
+        else return WinSheme.error
     }
 
     //  Проверка знака на выирыш
