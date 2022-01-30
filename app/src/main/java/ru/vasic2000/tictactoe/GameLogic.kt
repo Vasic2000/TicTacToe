@@ -2,14 +2,42 @@ package ru.vasic2000.tictactoe
 
 import android.view.View
 import java.util.*
+import kotlin.concurrent.thread
 
 class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
     private val random = Random()
 
     override fun run() {
-        drawLevel()
+        showSignAnimation(mainActivity.SIGN_HUMAN)
         gameLoop()
+    }
+
+    private fun showSignAnimation(signHuman: Char) {
+        if(signHuman == mainActivity.SIGN_X) {
+            mainActivity.cross_select_picture.post {
+                mainActivity.cross_select_picture.setImageResource(R.drawable.sign_cross_press)
+            }
+            //        Показываю 0,4 секунды кого выбрал
+            try {
+                Thread.sleep(400)
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+        }
+        else {
+            mainActivity.zero_select_picture.post {
+                mainActivity.zero_select_picture.setImageResource(R.drawable.sign_zero_press)
+            }
+            //        Показываю 0,4 секунды кого выбрал
+            try {
+                Thread.sleep(400)
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+        }
+        mainActivity.showGameScreen()
+        drawLevel()
     }
 
     private fun gameLoop() {
