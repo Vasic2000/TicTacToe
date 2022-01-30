@@ -215,7 +215,7 @@
 
 <!--    Кнопка сложного уровня-->
     <LinearLayout
-        android:id="@+id/hardLevel"
+        android:id="@+id/mediumLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -230,14 +230,14 @@
         app:layout_constraintHorizontal_bias="0.5">
 
         <Button
-            android:id="@+id/hardLevelBtn"
+            android:id="@+id/mediumLevelBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/btn_stroke_black95_pressed_white"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="@string/hard"
+            android:text="@string/medium"
             android:textColor="@color/colorBlack95"
             android:textSize="24sp"
             android:visibility="invisible"/>
@@ -245,7 +245,7 @@
 
 <!--    Кнопка невозможного уровня-->
     <LinearLayout
-        android:id="@+id/impossibleLevel"
+        android:id="@+id/hardLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -260,14 +260,14 @@
         app:layout_constraintHorizontal_bias="0.5">
 
         <Button
-            android:id="@+id/impossibleLevelBtn"
+            android:id="@+id/hardLevelBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/btn_stroke_black95_pressed_white"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="@string/impossible"
+            android:text="@string/hard"
             android:textColor="@color/colorBlack95"
             android:textSize="24sp"
             android:visibility="invisible"/>

@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     @Volatile
     private lateinit var gameState : GameState
 
-    private lateinit var dificulty: Dificulty
+    lateinit var dificulty: Dificulty
     private lateinit var backgroundImage: ImageView
     private lateinit var easyLevelBtn: Button
     private lateinit var hardLevelBtn: Button
@@ -96,8 +96,8 @@ class MainActivity : AppCompatActivity() {
     private fun initButtons() {
         startGameBtn = findViewById(R.id.buttonStart)
         easyLevelBtn = findViewById(R.id.easyLevelBtn)
-        hardLevelBtn = findViewById(R.id.hardLevelBtn)
-        impossibleLevelBtn = findViewById(R.id.impossibleLevelBtn)
+        hardLevelBtn = findViewById(R.id.mediumLevelBtn)
+        impossibleLevelBtn = findViewById(R.id.hardLevelBtn)
 
         progressBar = findViewById(R.id.progressBar)
 
@@ -354,7 +354,7 @@ fun hideGameElements() {
     private fun btnHardGame() {
         hardLevelBtn.setOnClickListener {
             gameState = GameState.GAME_HUMAN_TURN
-            dificulty = Dificulty.HARD
+            dificulty = Dificulty.MEDIUM
             showSignSelectScreen()
         }
     }
@@ -362,7 +362,7 @@ fun hideGameElements() {
     private fun btnImpossibleGame() {
         impossibleLevelBtn.setOnClickListener {
             gameState = GameState.GAME_AI_TURN
-            dificulty = Dificulty.IMPOSSIBLE
+            dificulty = Dificulty.HARD
             showSignSelectScreen()
         }
     }
