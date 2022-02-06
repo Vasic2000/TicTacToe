@@ -321,8 +321,8 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
 
             WinScheme.d2 -> {
                 if (winSign == mainActivity.SIGN_X) {
-                    mainActivity.cell31.post {
-                        mainActivity.cell31.setImageResource(R.drawable.cross_win)
+                    mainActivity.cell13.post {
+                        mainActivity.cell13.setImageResource(R.drawable.cross_win)
                     }
                     try {
                         Thread.sleep(500)
@@ -337,12 +337,12 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
-                    mainActivity.cell13.post {
-                        mainActivity.cell13.setImageResource(R.drawable.cross_win)
+                    mainActivity.cell31.post {
+                        mainActivity.cell31.setImageResource(R.drawable.cross_win)
                     }
                 } else {
-                    mainActivity.cell31.post {
-                        mainActivity.cell31.setImageResource(R.drawable.zero_win)
+                    mainActivity.cell13.post {
+                        mainActivity.cell13.setImageResource(R.drawable.zero_win)
                     }
                     try {
                         Thread.sleep(500)
@@ -357,8 +357,8 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
-                    mainActivity.cell13.post {
-                        mainActivity.cell13.setImageResource(R.drawable.zero_win)
+                    mainActivity.cell31.post {
+                        mainActivity.cell31.setImageResource(R.drawable.zero_win)
                     }
                 }
             }
