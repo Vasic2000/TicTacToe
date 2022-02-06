@@ -141,9 +141,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(0, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][0] = SIGN_HUMAN
                 redrawHuman(0, 0)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }
@@ -151,9 +153,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(0, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][1] = SIGN_HUMAN
                 redrawHuman(0, 1)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }
@@ -161,9 +165,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(0, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[0][2] = SIGN_HUMAN
                 redrawHuman(0, 2)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }
@@ -171,9 +177,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(1, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][0] = SIGN_HUMAN
                 redrawHuman(1, 0)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }
@@ -181,9 +189,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(1, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][1] = SIGN_HUMAN
                 redrawHuman(1, 1)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }
@@ -191,9 +201,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(1, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[1][2] = SIGN_HUMAN
                 redrawHuman(1, 2)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }
@@ -201,9 +213,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(2, 0) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][0] = SIGN_HUMAN
                 redrawHuman(2, 0)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }
@@ -211,9 +225,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(2, 1) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][1] = SIGN_HUMAN
                 redrawHuman(2, 1)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }
@@ -221,9 +237,11 @@ class MainActivity : AppCompatActivity() {
             if (isCellValid(2, 2) && (gameState == GameState.GAME_HUMAN_TURN)) {
                 table[2][2] = SIGN_HUMAN
                 redrawHuman(2, 2)
-                if(checkWin(SIGN_HUMAN)) gameState = GameState.GAME_WIN
-                else if(isTableFull()) gameState = GameState.GAME_DRAW
-                else gameState = GameState.GAME_AI_TURN
+                gameState = when {
+                    checkWin(SIGN_HUMAN) -> GameState.GAME_WIN
+                    isTableFull() -> GameState.GAME_DRAW
+                    else -> GameState.GAME_AI_TURN
+                }
                 println(gameState)
             }
         }

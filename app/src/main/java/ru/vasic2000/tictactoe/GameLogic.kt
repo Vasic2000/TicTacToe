@@ -55,13 +55,6 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         }
         println("Выпал из цикла = " + mainActivity.getGameState())
 
-        if (mainActivity.getGameState() == GameState.GAME_DRAW) {
-            mainActivity.gameResultImage.post {
-                mainActivity.showResultScreen(GameState.GAME_DRAW)
-                mainActivity.gameResultImage.visibility = View.VISIBLE
-            }
-        }
-
         if (mainActivity.getGameState() == GameState.GAME_WIN) {
             mainActivity.gameResultImage.post {
                 mainActivity.showResultScreen(GameState.GAME_WIN)
@@ -72,6 +65,13 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         if (mainActivity.getGameState() == GameState.GAME_LOOS) {
             mainActivity.gameResultImage.post {
                 mainActivity.showResultScreen(GameState.GAME_LOOS)
+                mainActivity.gameResultImage.visibility = View.VISIBLE
+            }
+        }
+
+        if (mainActivity.getGameState() == GameState.GAME_DRAW) {
+            mainActivity.gameResultImage.post {
+                mainActivity.showResultScreen(GameState.GAME_DRAW)
                 mainActivity.gameResultImage.visibility = View.VISIBLE
             }
         }
@@ -170,7 +170,42 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         if (checkRows()) return
         if (checkColumns()) return
 
+        if (firstStep()) return
+
         randomWalk()
+    }
+
+    private fun firstStep(): Boolean {
+        if((mainActivity.table[0][0] == mainActivity.SIGN_EMPTY) &&
+            (mainActivity.table[2][0] == mainActivity.SIGN_EMPTY) &&
+            (mainActivity.table[1][1] == mainActivity.SIGN_EMPTY) &&
+            (mainActivity.table[0][2] == mainActivity.SIGN_EMPTY) &&
+            (mainActivity.table[2][2] == mainActivity.SIGN_EMPTY)) {
+            val cell = random.nextInt(5)
+            when (cell) {
+                0 -> {
+                    AI_post(0, 0, Dificulty.HARD)
+                    return true
+                }
+                1 -> {
+                    AI_post(2, 0, Dificulty.HARD)
+                    return true
+                }
+                2 -> {
+                    AI_post(1, 1, Dificulty.HARD)
+                    return true
+                }
+                3 -> {
+                    AI_post(0, 2, Dificulty.HARD)
+                    return true
+                }
+                4 -> {
+                    AI_post(2, 2, Dificulty.HARD)
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     private fun AI_post(x: Int, y: Int, dificulty: Dificulty) {
@@ -193,8 +228,12 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         mainActivity.progressBar.post { mainActivity.progressBar.visibility = View.INVISIBLE }
         redrawAI(x, y)
         println(mainActivity.getGameState())
-        if (mainActivity.checkWin(mainActivity.SIGN_AI)) mainActivity.setGameState(GameState.GAME_LOOS)
-        if (mainActivity.isTableFull()) mainActivity.setGameState(GameState.GAME_DRAW)
+
+        when {
+            mainActivity.checkWin(mainActivity.SIGN_AI) -> mainActivity.setGameState(GameState.GAME_LOOS)
+            mainActivity.checkWin(mainActivity.SIGN_HUMAN) -> mainActivity.setGameState(GameState.GAME_WIN)
+            mainActivity.isTableFull() -> mainActivity.setGameState(GameState.GAME_DRAW)
+        }
     }
 
     private fun check1Diagonal(): Boolean {
@@ -256,14 +295,14 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
                 AI_post(row, 2, Dificulty.MEDIUM)
                 return true
             } else if ((mainActivity.table[row][0] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][1] != mainActivity.SIGN_AI)
+                (mainActivity.table[row][1] != mainActivity.SIGN_AI) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN)
             ) {
                 AI_post(row  , 1, Dificulty.MEDIUM)
                 return true
-            } else if ((mainActivity.table[row][1] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][0] != mainActivity.SIGN_AI)
+            } else if ((mainActivity.table[row][0] != mainActivity.SIGN_AI) &&
+                (mainActivity.table[row][1] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN)
             ) {
                 AI_post(row, 0, Dificulty.MEDIUM)
                 return true
@@ -281,14 +320,14 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
                 AI_post(2, col, Dificulty.MEDIUM)
                 return true
             } else if ((mainActivity.table[0][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[1][col] != mainActivity.SIGN_AI)
+                (mainActivity.table[1][col] != mainActivity.SIGN_AI) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN)
             ) {
                 AI_post(1, col, Dificulty.MEDIUM)
                 return true
-            } else if ((mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[0][col] != mainActivity.SIGN_AI)
+            } else if ((mainActivity.table[0][col] != mainActivity.SIGN_AI) &&
+                (mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN)
             ) {
                 AI_post(0, col, Dificulty.MEDIUM)
                 return true
@@ -308,7 +347,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
         if((mainActivity.table[0][0] == mainActivity.SIGN_AI) &&
             (mainActivity.table[2][2] == mainActivity.SIGN_AI) &&
-            (mainActivity.table[1][1] != mainActivity.SIGN_EMPTY)) {
+            (mainActivity.table[1][1] == mainActivity.SIGN_EMPTY)) {
             AI_post(1,1, Dificulty.HARD)
             return true
         }
@@ -324,24 +363,24 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
     private fun checkForWin2Diagonal(): Boolean {
 
-        if((mainActivity.table[0][2] == mainActivity.SIGN_HUMAN) &&
-            (mainActivity.table[1][1] == mainActivity.SIGN_HUMAN) &&
-            (mainActivity.table[2][0] != mainActivity.SIGN_AI)) {
-            AI_post(2,0, Dificulty.MEDIUM)
+        if((mainActivity.table[0][2] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[1][1] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[2][0] == mainActivity.SIGN_EMPTY)) {
+            AI_post(2,0, Dificulty.HARD)
             return true
         }
 
-        if((mainActivity.table[0][2] == mainActivity.SIGN_HUMAN) &&
-            (mainActivity.table[2][0] == mainActivity.SIGN_HUMAN) &&
-            (mainActivity.table[1][1] != mainActivity.SIGN_AI)) {
-            AI_post(1,1, Dificulty.MEDIUM)
+        if((mainActivity.table[0][2] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[2][0] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[1][1] == mainActivity.SIGN_EMPTY)) {
+            AI_post(1,1, Dificulty.HARD)
             return true
         }
 
-        if((mainActivity.table[1][1] == mainActivity.SIGN_HUMAN) &&
-            (mainActivity.table[2][0] == mainActivity.SIGN_HUMAN) &&
-            (mainActivity.table[0][2] != mainActivity.SIGN_AI)) {
-            AI_post(0,2, Dificulty.MEDIUM)
+        if((mainActivity.table[1][1] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[2][0] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[0][2] == mainActivity.SIGN_EMPTY)) {
+            AI_post(0,2, Dificulty.HARD)
             return true
         }
         return false
@@ -349,23 +388,23 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
     private fun checkForWinRows(): Boolean {
         for (row in 0..2) {
-            if ((mainActivity.table[row][0] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][1] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][2] != mainActivity.SIGN_AI)
+            if ((mainActivity.table[row][0] == mainActivity.SIGN_AI) &&
+                (mainActivity.table[row][1] == mainActivity.SIGN_AI) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_EMPTY)
             ) {
-                AI_post(row, 2, Dificulty.MEDIUM)
+                AI_post(row, 2, Dificulty.HARD)
                 return true
-            } else if ((mainActivity.table[row][0] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][1] != mainActivity.SIGN_AI)
+            } else if ((mainActivity.table[row][0] == mainActivity.SIGN_AI) &&
+                (mainActivity.table[row][1] == mainActivity.SIGN_EMPTY) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_AI)
             ) {
-                AI_post(row  , 1, Dificulty.MEDIUM)
+                AI_post(row  , 1, Dificulty.HARD)
                 return true
-            } else if ((mainActivity.table[row][1] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[row][0] != mainActivity.SIGN_AI)
+            } else if ( (mainActivity.table[row][0] == mainActivity.SIGN_EMPTY) &&
+                (mainActivity.table[row][1] == mainActivity.SIGN_AI) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_AI)
             ) {
-                AI_post(row, 0, Dificulty.MEDIUM)
+                AI_post(row, 0, Dificulty.HARD)
                 return true
             }
         }
@@ -374,21 +413,21 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
     private fun checkForWinColumns(): Boolean {
         for (col in 0..2) {
-            if ((mainActivity.table[0][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[2][col] != mainActivity.SIGN_AI)
+            if ((mainActivity.table[0][col] == mainActivity.SIGN_AI) &&
+                (mainActivity.table[1][col] == mainActivity.SIGN_AI) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_EMPTY)
             ) {
                 AI_post(2, col, Dificulty.MEDIUM)
                 return true
-            } else if ((mainActivity.table[0][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[1][col] != mainActivity.SIGN_AI)
+            } else if ((mainActivity.table[0][col] == mainActivity.SIGN_AI) &&
+                (mainActivity.table[1][col] == mainActivity.SIGN_EMPTY) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_AI)
             ) {
                 AI_post(1, col, Dificulty.MEDIUM)
                 return true
-            } else if ((mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN) &&
-                (mainActivity.table[0][col] != mainActivity.SIGN_AI)
+            } else if ((mainActivity.table[0][col] == mainActivity.SIGN_EMPTY) &&
+                (mainActivity.table[1][col] == mainActivity.SIGN_AI) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_AI)
             ) {
                 AI_post(0, col, Dificulty.MEDIUM)
                 return true
