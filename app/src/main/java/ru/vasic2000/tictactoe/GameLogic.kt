@@ -2,7 +2,6 @@ package ru.vasic2000.tictactoe
 
 import android.view.View
 import java.util.*
-import kotlin.concurrent.thread
 
 class GameLogic(private val mainActivity: MainActivity) : Runnable {
 
@@ -44,13 +43,14 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         //        Цикл, пока идёт игра
         while((mainActivity.getGameState() == (GameState.GAME_AI_TURN))or(mainActivity.getGameState() == (GameState.GAME_HUMAN_TURN))) {
             println("inside цикл = " + mainActivity.getGameState())
-            if ((mainActivity.getGameState() == GameState.GAME_AI_TURN) && (mainActivity.dificulty == Dificulty.EASY)) {
-                randomWalk()
-            } else if ((mainActivity.getGameState() == GameState.GAME_AI_TURN) && (mainActivity.dificulty == Dificulty.MEDIUM)) {
-                hardWalk()
-            }
-            else if ((mainActivity.getGameState() == GameState.GAME_AI_TURN) && (mainActivity.dificulty == Dificulty.HARD)) {
-                hardWalk()
+            if(mainActivity.getGameState() == GameState.GAME_AI_TURN) {
+                if (mainActivity.dificulty == Dificulty.EASY) {
+                    randomWalk()
+                } else if (mainActivity.dificulty == Dificulty.MEDIUM) {
+                    mediumWalk()
+                } else if (mainActivity.dificulty == Dificulty.HARD) {
+                    hardWalk()
+                }
             }
         }
         println("Выпал из цикла = " + mainActivity.getGameState())
@@ -75,7 +75,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
                 mainActivity.gameResultImage.visibility = View.VISIBLE
             }
         }
-//        println("Выход совсем = " + mainActivity.getGameState())
+        println("Выход совсем = " + mainActivity.getGameState())
     }
 
 
@@ -151,11 +151,25 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
     }
 
     //  Ход в уровне Hard
-    private fun hardWalk() {
+    private fun mediumWalk() {
         if (check1Diagonal()) return
         if (check2Diagonal()) return
         if (checkRows()) return
         if (checkColumns()) return
+        randomWalk()
+    }
+
+    private fun hardWalk() {
+        if (checkForWin1Diagonal()) return
+        if (checkForWin2Diagonal()) return
+        if (checkForWinRows()) return
+        if (checkForWinColumns()) return
+
+        if (check1Diagonal()) return
+        if (check2Diagonal()) return
+        if (checkRows()) return
+        if (checkColumns()) return
+
         randomWalk()
     }
 
@@ -259,6 +273,106 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
     }
 
     private fun checkColumns(): Boolean {
+        for (col in 0..2) {
+            if ((mainActivity.table[0][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[2][col] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(2, col, Dificulty.MEDIUM)
+                return true
+            } else if ((mainActivity.table[0][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[1][col] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(1, col, Dificulty.MEDIUM)
+                return true
+            } else if ((mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[0][col] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(0, col, Dificulty.MEDIUM)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun checkForWin1Diagonal(): Boolean {
+
+        if((mainActivity.table[0][0] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[1][1] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[2][2] == mainActivity.SIGN_EMPTY)) {
+            AI_post(2,2, Dificulty.HARD)
+            return true
+        }
+
+        if((mainActivity.table[0][0] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[2][2] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[1][1] != mainActivity.SIGN_EMPTY)) {
+            AI_post(1,1, Dificulty.HARD)
+            return true
+        }
+
+        if((mainActivity.table[1][1] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[2][2] == mainActivity.SIGN_AI) &&
+            (mainActivity.table[0][0] == mainActivity.SIGN_EMPTY)) {
+            AI_post(0,0, Dificulty.HARD)
+            return true
+        }
+        return false
+    }
+
+    private fun checkForWin2Diagonal(): Boolean {
+
+        if((mainActivity.table[0][2] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[1][1] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][0] != mainActivity.SIGN_AI)) {
+            AI_post(2,0, Dificulty.MEDIUM)
+            return true
+        }
+
+        if((mainActivity.table[0][2] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][0] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[1][1] != mainActivity.SIGN_AI)) {
+            AI_post(1,1, Dificulty.MEDIUM)
+            return true
+        }
+
+        if((mainActivity.table[1][1] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][0] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[0][2] != mainActivity.SIGN_AI)) {
+            AI_post(0,2, Dificulty.MEDIUM)
+            return true
+        }
+        return false
+    }
+
+    private fun checkForWinRows(): Boolean {
+        for (row in 0..2) {
+            if ((mainActivity.table[row][0] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][1] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][2] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(row, 2, Dificulty.MEDIUM)
+                return true
+            } else if ((mainActivity.table[row][0] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][1] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(row  , 1, Dificulty.MEDIUM)
+                return true
+            } else if ((mainActivity.table[row][1] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][0] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(row, 0, Dificulty.MEDIUM)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun checkForWinColumns(): Boolean {
         for (col in 0..2) {
             if ((mainActivity.table[0][col] == mainActivity.SIGN_HUMAN) &&
                 (mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
