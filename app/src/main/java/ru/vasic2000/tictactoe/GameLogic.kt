@@ -75,7 +75,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
                 mainActivity.gameResultImage.visibility = View.VISIBLE
             }
         }
-        println("Выход совсем = " + mainActivity.getGameState())
+//        println("Выход совсем = " + mainActivity.getGameState())
     }
 
 
@@ -282,7 +282,6 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         }
         return false
     }
-
 
     private fun redrawAI(x: Int, y: Int) {
         when (x) {
