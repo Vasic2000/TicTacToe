@@ -305,7 +305,7 @@ class MainActivity : AppCompatActivity() {
         zero_select_picture.setImageResource(R.drawable.sign_zero)
         cross_select_picture.setImageResource(R.drawable.sign_cross)
 
-        backgroundImage.setImageResource(R.drawable.background)
+        backgroundImage.setImageResource(R.drawable.choosingscreen)
         easyLevelBtn.visibility = View.INVISIBLE
         hardLevelBtn.visibility = View.INVISIBLE
         impossibleLevelBtn.visibility = View.INVISIBLE
