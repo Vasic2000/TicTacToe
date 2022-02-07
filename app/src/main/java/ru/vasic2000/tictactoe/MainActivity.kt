@@ -284,7 +284,7 @@ class MainActivity : AppCompatActivity() {
     private fun showSignSelectScreen() {
         gameScreen = GameScreen.SIGN_SELECT_SCREEN
 
-        backgroundImage.setImageResource(R.drawable.background)
+        backgroundImage.setImageResource(R.drawable.choosingscreen)
         easyLevelBtn.visibility = View.INVISIBLE
         hardLevelBtn.visibility = View.INVISIBLE
         impossibleLevelBtn.visibility = View.INVISIBLE
