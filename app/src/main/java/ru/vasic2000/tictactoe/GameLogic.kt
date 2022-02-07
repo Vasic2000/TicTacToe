@@ -44,8 +44,13 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         //        Цикл, пока идёт игра
         while((mainActivity.getGameState() == (GameState.GAME_AI_TURN))or(mainActivity.getGameState() == (GameState.GAME_HUMAN_TURN))) {
             println("inside цикл = " + mainActivity.getGameState())
-            if (mainActivity.getGameState() == GameState.GAME_AI_TURN) {
+            if ((mainActivity.getGameState() == GameState.GAME_AI_TURN) && (mainActivity.dificulty == Dificulty.EASY)) {
                 randomWalk()
+            } else if ((mainActivity.getGameState() == GameState.GAME_AI_TURN) && (mainActivity.dificulty == Dificulty.MEDIUM)) {
+                hardWalk()
+            }
+            else if ((mainActivity.getGameState() == GameState.GAME_AI_TURN) && (mainActivity.dificulty == Dificulty.HARD)) {
+                hardWalk()
             }
         }
         println("Выпал из цикла = " + mainActivity.getGameState())
@@ -70,7 +75,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
                 mainActivity.gameResultImage.visibility = View.VISIBLE
             }
         }
-        println("Выход совсем = " + mainActivity.getGameState())
+//        println("Выход совсем = " + mainActivity.getGameState())
     }
 
 
@@ -129,7 +134,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
     }
 
     //  Проверка не занята ли ячейка
-    fun isCellValid(x: Int, y: Int): Boolean {
+    private fun isCellValid(x: Int, y: Int): Boolean {
         return mainActivity.isCellValid(x,y)
     }
 
@@ -142,24 +147,143 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             y = random.nextInt(3)
         } while (!isCellValid(x, y))
 
-        mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.VISIBLE}
+        AI_post(x, y, mainActivity.dificulty)
+    }
+
+    //  Ход в уровне Hard
+    private fun hardWalk() {
+        if (check1Diagonal()) return
+        if (check2Diagonal()) return
+        if (checkRows()) return
+        if (checkColumns()) return
+        randomWalk()
+    }
+
+    private fun AI_post(x: Int, y: Int, dificulty: Dificulty) {
+        var longitude: Long
+        mainActivity.progressBar.post { mainActivity.progressBar.visibility = View.VISIBLE }
         mainActivity.table[x][y] = mainActivity.SIGN_AI
 
-//        Типа думаю
+        //  Типа думаю
+        when(dificulty) {
+            Dificulty.EASY -> { longitude = 400 }
+            Dificulty.MEDIUM -> { longitude = 750 }
+            Dificulty.HARD -> { longitude = 1200 }
+        }
         try {
-            Thread.sleep(500)
+            Thread.sleep(longitude)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
 
-        mainActivity.progressBar.post {mainActivity.progressBar.visibility = View.INVISIBLE}
-        redrawAI(x,y)
+        mainActivity.progressBar.post { mainActivity.progressBar.visibility = View.INVISIBLE }
+        redrawAI(x, y)
         println(mainActivity.getGameState())
-        if(mainActivity.checkWin(mainActivity.SIGN_AI)) mainActivity.setGameState(GameState.GAME_LOOS)
-        if(mainActivity.isTableFull()) mainActivity.setGameState(GameState.GAME_DRAW)
+        if (mainActivity.checkWin(mainActivity.SIGN_AI)) mainActivity.setGameState(GameState.GAME_LOOS)
+        if (mainActivity.isTableFull()) mainActivity.setGameState(GameState.GAME_DRAW)
     }
 
-    fun redrawAI(x: Int, y: Int) {
+    private fun check1Diagonal(): Boolean {
+
+        if((mainActivity.table[0][0] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[1][1] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][2] != mainActivity.SIGN_AI)) {
+            AI_post(2,2, Dificulty.MEDIUM)
+            return true
+        }
+
+        if((mainActivity.table[0][0] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][2] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[1][1] != mainActivity.SIGN_AI)) {
+            AI_post(1,1, Dificulty.MEDIUM)
+            return true
+        }
+
+        if((mainActivity.table[1][1] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][2] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[0][0] != mainActivity.SIGN_AI)) {
+            AI_post(0,0, Dificulty.MEDIUM)
+            return true
+        }
+        return false
+    }
+
+    private fun check2Diagonal(): Boolean {
+
+        if((mainActivity.table[0][2] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[1][1] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][0] != mainActivity.SIGN_AI)) {
+            AI_post(2,0, Dificulty.MEDIUM)
+            return true
+        }
+
+        if((mainActivity.table[0][2] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][0] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[1][1] != mainActivity.SIGN_AI)) {
+            AI_post(1,1, Dificulty.MEDIUM)
+            return true
+        }
+
+        if((mainActivity.table[1][1] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[2][0] == mainActivity.SIGN_HUMAN) &&
+            (mainActivity.table[0][2] != mainActivity.SIGN_AI)) {
+            AI_post(0,2, Dificulty.MEDIUM)
+            return true
+        }
+        return false
+    }
+
+    private fun checkRows(): Boolean {
+        for (row in 0..2) {
+            if ((mainActivity.table[row][0] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][1] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][2] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(row, 2, Dificulty.MEDIUM)
+                return true
+            } else if ((mainActivity.table[row][0] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][1] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(row  , 1, Dificulty.MEDIUM)
+                return true
+            } else if ((mainActivity.table[row][1] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][2] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[row][0] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(row, 0, Dificulty.MEDIUM)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun checkColumns(): Boolean {
+        for (col in 0..2) {
+            if ((mainActivity.table[0][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[2][col] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(2, col, Dificulty.MEDIUM)
+                return true
+            } else if ((mainActivity.table[0][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[1][col] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(1, col, Dificulty.MEDIUM)
+                return true
+            } else if ((mainActivity.table[1][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[2][col] == mainActivity.SIGN_HUMAN) &&
+                (mainActivity.table[0][col] != mainActivity.SIGN_AI)
+            ) {
+                AI_post(0, col, Dificulty.MEDIUM)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun redrawAI(x: Int, y: Int) {
         when (x) {
             0 -> when (y) {
                 0 -> {

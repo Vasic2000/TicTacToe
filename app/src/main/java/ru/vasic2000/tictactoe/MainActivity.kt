@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     @Volatile
     private lateinit var gameState : GameState
 
-    private lateinit var dificulty: Dificulty
+    lateinit var dificulty: Dificulty
     private lateinit var backgroundImage: ImageView
     private lateinit var easyLevelBtn: Button
     private lateinit var hardLevelBtn: Button
@@ -96,8 +96,8 @@ class MainActivity : AppCompatActivity() {
     private fun initButtons() {
         startGameBtn = findViewById(R.id.buttonStart)
         easyLevelBtn = findViewById(R.id.easyLevelBtn)
-        hardLevelBtn = findViewById(R.id.hardLevelBtn)
-        impossibleLevelBtn = findViewById(R.id.impossibleLevelBtn)
+        hardLevelBtn = findViewById(R.id.mediumLevelBtn)
+        impossibleLevelBtn = findViewById(R.id.hardLevelBtn)
 
         progressBar = findViewById(R.id.progressBar)
 
@@ -284,7 +284,11 @@ class MainActivity : AppCompatActivity() {
     private fun showSignSelectScreen() {
         gameScreen = GameScreen.SIGN_SELECT_SCREEN
 
+
         backgroundImage.setImageResource(R.drawable.choosingscreen)
+        zero_select_picture.setImageResource(R.drawable.sign_zero)
+        cross_select_picture.setImageResource(R.drawable.sign_cross)
+
         easyLevelBtn.visibility = View.INVISIBLE
         hardLevelBtn.visibility = View.INVISIBLE
         impossibleLevelBtn.visibility = View.INVISIBLE
@@ -304,9 +308,11 @@ class MainActivity : AppCompatActivity() {
         when(gameState) {
             GameState.GAME_WIN -> {
                 gameResultImage.setImageResource(R.drawable.win)
+                redrawWinCombination(findWinSheme(SIGN_HUMAN), SIGN_HUMAN)
             }
             GameState.GAME_LOOS -> {
                 gameResultImage.setImageResource(R.drawable.loss)
+                redrawWinCombination(findWinSheme(SIGN_AI), SIGN_AI)
             }
             GameState.GAME_DRAW -> {
                 gameResultImage.setImageResource(R.drawable.draw)
@@ -314,8 +320,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//  Повторяющаяся операция спрятать элементы игрового поля
-fun hideGameElements() {
+    private fun redrawWinCombination(findWinScheme: WinScheme, winSign: Char) {
+        //        Отдельный от UI поток с отрисовкой победителя
+        val winSchemeDraw = WinSchemeDraw(this, findWinScheme, winSign)
+        val winDrawThread = Thread(winSchemeDraw)
+        winDrawThread.start()
+    }
+
+    //  Повторяющаяся операция спрятать элементы игрового поля
+    private fun hideGameElements() {
         leftVerticalLineShadowImage.visibility = View.INVISIBLE
         rightVerticalLineShadowImage.visibility = View.INVISIBLE
         topHorizontalLineShadowImage.visibility = View.INVISIBLE
@@ -354,7 +367,7 @@ fun hideGameElements() {
     private fun btnHardGame() {
         hardLevelBtn.setOnClickListener {
             gameState = GameState.GAME_HUMAN_TURN
-            dificulty = Dificulty.HARD
+            dificulty = Dificulty.MEDIUM
             showSignSelectScreen()
         }
     }
@@ -362,7 +375,7 @@ fun hideGameElements() {
     private fun btnImpossibleGame() {
         impossibleLevelBtn.setOnClickListener {
             gameState = GameState.GAME_AI_TURN
-            dificulty = Dificulty.IMPOSSIBLE
+            dificulty = Dificulty.HARD
             showSignSelectScreen()
         }
     }
@@ -465,6 +478,23 @@ fun hideGameElements() {
                 }
             }
         }
+    }
+
+    //  Поиск выигрышной комбинации
+    fun findWinSheme(dot: Char): WinScheme {
+       if(table[0][0] == dot && table[0][1] == dot && table[0][2] == dot) return WinScheme.row1
+        if(table[1][0] == dot && table[1][1] == dot && table[1][2] == dot) return WinScheme.row2
+        if(table[2][0] == dot && table[2][1] == dot && table[2][2] == dot) return WinScheme.row3
+
+        if(table[0][0] == dot && table[1][0] == dot && table[2][0] == dot) return WinScheme.col1
+        if(table[0][1] == dot && table[1][1] == dot && table[2][1] == dot) return WinScheme.col2
+        if(table[0][2] == dot && table[1][2] == dot && table[2][2] == dot) return WinScheme.col3
+
+        if(table[0][0] == dot && table[1][1] == dot && table[2][2] == dot) return WinScheme.d1
+        if(table[2][0] == dot && table[1][1] == dot && table[0][2] == dot) return WinScheme.d2
+
+    //  Не должен сюда попадать, для тестов
+        else return WinScheme.error
     }
 
     //  Проверка знака на выирыш
