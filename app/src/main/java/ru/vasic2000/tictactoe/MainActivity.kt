@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         soundCross = sounds.load(applicationContext, R.raw.cross, 1)
         soundRound = sounds.load(applicationContext, R.raw.round, 1)
-        soundClick = sounds.load(applicationContext, R.raw.round,1)
+        soundClick = sounds.load(applicationContext, R.raw.click,1)
     }
 
     private fun initImages() {
@@ -127,8 +127,8 @@ class MainActivity : AppCompatActivity() {
 
         btnStart()
         btnEasyGame()
+        btnMediumGame()
         btnHardGame()
-        btnImpossibleGame()
 
         crossSelect()
         zeroSelect()
@@ -393,27 +393,31 @@ class MainActivity : AppCompatActivity() {
     private fun btnStart() {
         val btnStart = findViewById<Button>(R.id.buttonStart)
         btnStart.setOnClickListener {
+            sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
             showSecondScreen()
         }
     }
 
     private fun btnEasyGame() {
         easyLevelBtn.setOnClickListener {
+            sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
             gameState = GameState.GAME_HUMAN_TURN
             dificulty = Dificulty.EASY
             showSignSelectScreen()
         }
     }
 
-    private fun btnHardGame() {
+    private fun btnMediumGame() {
         hardLevelBtn.setOnClickListener {
+            sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
             gameState = GameState.GAME_HUMAN_TURN
             dificulty = Dificulty.MEDIUM
             showSignSelectScreen()
         }
     }
 
-    private fun btnImpossibleGame() {
+    private fun btnHardGame() {
+        sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
         impossibleLevelBtn.setOnClickListener {
             gameState = GameState.GAME_AI_TURN
             dificulty = Dificulty.HARD
@@ -614,26 +618,32 @@ class MainActivity : AppCompatActivity() {
         when (gameScreen) {
             GameScreen.FIRST_SCREEN -> {
                 if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                    sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
                     backToast.cancel()
                     super.onBackPressed()
                     exitProcess(0)
                     return
                 } else {
+                    sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
                     backToast = Toast.makeText(this, "Press Back to exit again", Toast.LENGTH_SHORT)
                     backToast.show()
                 }
                 backPressedTime = System.currentTimeMillis()
             }
             GameScreen.SECOND_SCREEN -> {
+                sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
                 showFirstScreen()
             }
             GameScreen.SIGN_SELECT_SCREEN -> {
+                sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
                 showSecondScreen()
             }
             GameScreen.GAME_SCREEN -> {
+                sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
                 showSecondScreen()
             }
             GameScreen.GAME_OVER_SCREEN -> {
+                sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
                 showSecondScreen()
             }
         }
