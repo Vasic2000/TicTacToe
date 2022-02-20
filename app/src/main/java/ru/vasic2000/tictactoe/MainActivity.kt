@@ -1,5 +1,8 @@
 package ru.vasic2000.tictactoe
 
+import android.media.AudioManager
+import android.media.SoundPool
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -14,6 +17,12 @@ private lateinit var backToast: Toast
 private var gameScreen: GameScreen = GameScreen.FIRST_SCREEN
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var sounds : SoundPool
+
+    var soundCross : Int = 0
+    var soundRound : Int = 0
+    var soundClick : Int = 0
 
     @Volatile
     private lateinit var gameState : GameState
@@ -62,9 +71,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initSounds()
         initImages()
         initButtons()
         showFirstScreen()
+    }
+
+    private fun initSounds() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            sounds = SoundPool.Builder()
+                .setMaxStreams(2)
+                .build()
+        } else {
+            sounds = SoundPool(2, AudioManager.STREAM_MUSIC, 1)
+        }
+
+        soundCross = sounds.load(applicationContext, R.raw.cross, 1)
+        soundRound = sounds.load(applicationContext, R.raw.round, 1)
+        soundClick = sounds.load(applicationContext, R.raw.round,1)
     }
 
     private fun initImages() {
@@ -426,79 +450,114 @@ class MainActivity : AppCompatActivity() {
     }
 
     //  Инициализация таблицы пустыми ячейками
-    fun initTable() {
+    private fun initTable() {
         for (row in 0..2) for (col in 0..2)
             table[row][col] = SIGN_EMPTY
     }
 
-    fun redrawHuman(x: Int, y: Int) {
+    private fun redrawHuman(x: Int, y: Int) {
         when (x) {
             0 -> when (y) {
                 0 -> {
-                    if(SIGN_HUMAN == SIGN_X)
+                    if (SIGN_HUMAN == SIGN_X) {
                         cell11.setImageResource(R.drawable.cross)
-                    else
+                        sounds.play(soundCross, 1f, 1f, 1, 0, 1f)
+                    } else {
                         cell11.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
                 1 -> {
-                    if(SIGN_HUMAN == SIGN_X)
-                    cell12.setImageResource(R.drawable.cross)
-                else
-                    cell12.setImageResource(R.drawable.zero)
+                    if(SIGN_HUMAN == SIGN_X) {
+                        cell12.setImageResource(R.drawable.cross)
+                        sounds.play(soundCross, 1f, 1f,1,0, 1f)
+                    }
+                else {
+                        cell12.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
                 2 -> {
-                    if(SIGN_HUMAN == SIGN_X)
-                    cell13.setImageResource(R.drawable.cross)
-                else
-                    cell13.setImageResource(R.drawable.zero)
+                    if(SIGN_HUMAN == SIGN_X) {
+                        cell13.setImageResource(R.drawable.cross)
+                        sounds.play(soundCross, 1f, 1f, 1, 0, 1f)
+                    }
+                else {
+                        cell13.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
             }
 
             1 -> when (y) {
                 0 -> {
-                    if(SIGN_HUMAN == SIGN_X)
+                    if(SIGN_HUMAN == SIGN_X) {
                         cell21.setImageResource(R.drawable.cross)
-                    else
+                        sounds.play(soundCross, 1f, 1f, 1, 0, 1f)
+                    }
+                    else {
                         cell21.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
                 1 -> {
-                    if(SIGN_HUMAN == SIGN_X)
+                    if(SIGN_HUMAN == SIGN_X) {
                         cell22.setImageResource(R.drawable.cross)
-                    else
+                        sounds.play(soundCross, 1f, 1f, 1, 0, 1f)
+                    }
+                    else {
                         cell22.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
                 2 -> {
-                    if(SIGN_HUMAN == SIGN_X)
+                    if(SIGN_HUMAN == SIGN_X) {
                         cell23.setImageResource(R.drawable.cross)
-                    else
+                        sounds.play(soundCross, 1f, 1f, 1, 0, 1f)
+                    }
+                    else {
                         cell23.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
             }
             2 -> when (y) {
                 0 -> {
-                    if(SIGN_HUMAN == SIGN_X)
+                    if(SIGN_HUMAN == SIGN_X) {
                         cell31.setImageResource(R.drawable.cross)
-                    else
+                        sounds.play(soundCross, 1f, 1f, 1, 0, 1f)
+                    }
+                    else {
                         cell31.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
                 1 -> {
-                    if(SIGN_HUMAN == SIGN_X)
+                    if(SIGN_HUMAN == SIGN_X) {
                         cell32.setImageResource(R.drawable.cross)
-                    else
+                        sounds.play(soundCross, 1f, 1f, 1, 0, 1f)
+                    }
+                    else {
                         cell32.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
                 2 -> {
-                    if(SIGN_HUMAN == SIGN_X)
+                    if(SIGN_HUMAN == SIGN_X) {
                         cell33.setImageResource(R.drawable.cross)
-                    else
+                        sounds.play(soundCross, 1f, 1f, 1, 0, 1f)
+                    }
+                    else {
                         cell33.setImageResource(R.drawable.zero)
+                        sounds.play(soundRound, 1f, 1f, 1, 0, 1f)
+                    }
                 }
             }
         }
     }
 
     //  Поиск выигрышной комбинации
-    fun findWinSheme(dot: Char): WinScheme {
+    private fun findWinSheme(dot: Char): WinScheme {
        if(table[0][0] == dot && table[0][1] == dot && table[0][2] == dot) return WinScheme.row1
         if(table[1][0] == dot && table[1][1] == dot && table[1][2] == dot) return WinScheme.row2
         if(table[2][0] == dot && table[2][1] == dot && table[2][2] == dot) return WinScheme.row3
