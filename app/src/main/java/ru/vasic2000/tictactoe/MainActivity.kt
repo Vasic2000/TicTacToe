@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     var soundCross : Int = 0
     var soundRound : Int = 0
     var soundClick : Int = 0
+    var soundWin : Int =0
+    var soundLoose : Int =0
 
     @Volatile
     private lateinit var gameState : GameState
@@ -89,6 +91,8 @@ class MainActivity : AppCompatActivity() {
         soundCross = sounds.load(applicationContext, R.raw.cross, 1)
         soundRound = sounds.load(applicationContext, R.raw.round, 1)
         soundClick = sounds.load(applicationContext, R.raw.click,1)
+        soundWin = sounds.load(applicationContext, R.raw.ccawo,1 )
+        soundLoose = sounds.load(applicationContext, R.raw.ccawoloose,1 )
     }
 
     private fun initImages() {
@@ -349,9 +353,11 @@ class MainActivity : AppCompatActivity() {
         when(gameState) {
             GameState.GAME_WIN -> {
                 gameResultImage.setImageResource(R.drawable.win)
+                sounds.play(soundWin, 1f, 1f, 1, 0, 1f)
                 redrawWinCombination(findWinSheme(SIGN_HUMAN), SIGN_HUMAN)
             }
             GameState.GAME_LOOS -> {
+                sounds.play(soundLoose, 1f, 1f, 1, 0, 1f)
                 gameResultImage.setImageResource(R.drawable.loss)
                 redrawWinCombination(findWinSheme(SIGN_AI), SIGN_AI)
             }
@@ -622,7 +628,6 @@ class MainActivity : AppCompatActivity() {
                     backToast.cancel()
                     super.onBackPressed()
                     exitProcess(0)
-                    return
                 } else {
                     sounds.play(soundClick, 1f, 1f, 1, 0, 1f)
                     backToast = Toast.makeText(this, "Press Back to exit again", Toast.LENGTH_SHORT)
