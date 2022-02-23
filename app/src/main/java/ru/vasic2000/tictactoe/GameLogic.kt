@@ -17,6 +17,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             mainActivity.cross_select_picture.post {
                 mainActivity.sounds.play(mainActivity.soundClick, 1f, 1f, 1, 0, 1f)
                 mainActivity.cross_select_picture.setImageResource(R.drawable.sign_cross_press)
+                mainActivity.showGameScreen()
             }
             //        Показываю 0,4 секунды кого выбрал
             try {
@@ -29,6 +30,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             mainActivity.zero_select_picture.post {
                 mainActivity.sounds.play(mainActivity.soundClick, 1f, 1f, 1, 0, 1f)
                 mainActivity.zero_select_picture.setImageResource(R.drawable.sign_zero_press)
+                mainActivity.showGameScreen()
             }
             //        Показываю 0,4 секунды кого выбрал
             try {
@@ -37,7 +39,6 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
                 e.printStackTrace()
             }
         }
-        mainActivity.showGameScreen()
         drawLevel()
     }
 

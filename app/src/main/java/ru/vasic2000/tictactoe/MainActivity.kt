@@ -20,12 +20,12 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var sounds : SoundPool
 
-    var soundCross: Int = 0
+    var soundCross : Int = 0
     var soundRound: Int = 0
     var soundClick: Int = 0
     var soundWin: Int = 0
     var soundLoose: Int = 0
-    var soundDraw: Int = 0
+    var soundDraw: Int =0
 
     @Volatile
     private lateinit var gameState : GameState
@@ -74,6 +74,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//      Эта строка позволяет управлять громкостью Media из приложения кнопками громче тише
+        volumeControlStream = AudioManager.STREAM_MUSIC
         initSounds()
         initImages()
         initButtons()
@@ -94,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         soundClick = sounds.load(applicationContext, R.raw.click,1)
         soundWin = sounds.load(applicationContext, R.raw.ccawo,1 )
         soundLoose = sounds.load(applicationContext, R.raw.ccawoloose,1 )
-        soundDraw = sounds.load(applicationContext, R.raw.draw, 1)
+        soundDraw = sounds.load(applicationContext, R.raw.draw,1)
     }
 
     private fun initImages() {
@@ -317,7 +319,6 @@ class MainActivity : AppCompatActivity() {
 
     fun showGameScreen() {
         gameScreen = GameScreen.GAME_SCREEN
-
         backgroundImage.setImageResource(R.drawable.background)
         easyLevelBtn.visibility = View.INVISIBLE
         hardLevelBtn.visibility = View.INVISIBLE
