@@ -1,12 +1,12 @@
 package ru.vasic2000.tictactoe
 
 class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinScheme, winSimbol : Char) : Runnable {
-    val winScheme = winScheme
-    val winSign = winSimbol
+    private val winScheme = winScheme
+    private val winSign = winSimbol
 
     override fun run() {
         try {
-            Thread.sleep(500)
+            Thread.sleep(600)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -17,7 +17,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell11.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -25,7 +25,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell12.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -37,7 +37,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell11.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -45,7 +45,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell12.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -61,7 +61,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell21.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -69,7 +69,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell22.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -81,7 +81,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell21.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -89,7 +89,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell22.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -105,7 +105,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell31.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -113,7 +113,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell32.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -125,7 +125,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell31.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -133,7 +133,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell32.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -149,7 +149,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell11.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -157,7 +157,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell21.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -169,7 +169,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell11.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -177,7 +177,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell21.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -193,7 +193,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell12.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -201,7 +201,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell22.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -213,7 +213,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell12.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -221,7 +221,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell22.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -237,7 +237,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell13.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -245,7 +245,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell23.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -257,7 +257,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell13.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -265,7 +265,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell23.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -281,7 +281,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell11.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -289,7 +289,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell22.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -301,7 +301,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell11.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -309,7 +309,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell22.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -325,7 +325,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell13.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -333,7 +333,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell22.setImageResource(R.drawable.cross_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -345,7 +345,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell13.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -353,7 +353,7 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                         mainActivity.cell22.setImageResource(R.drawable.zero_win)
                     }
                     try {
-                        Thread.sleep(500)
+                        Thread.sleep(600)
                     } catch (e: InterruptedException) {
                         e.printStackTrace()
                     }
@@ -366,4 +366,3 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
         println("Отрисовал победителя " + winSign + " и выхожу " + winScheme)
     }
 }
-

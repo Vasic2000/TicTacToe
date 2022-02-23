@@ -15,6 +15,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
     private fun showSignAnimation(signHuman: Char) {
         if(signHuman == mainActivity.SIGN_X) {
             mainActivity.cross_select_picture.post {
+                mainActivity.sounds.play(mainActivity.soundClick, 1f, 1f, 1, 0, 1f)
                 mainActivity.cross_select_picture.setImageResource(R.drawable.sign_cross_press)
             }
             //        Показываю 0,4 секунды кого выбрал
@@ -26,6 +27,7 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         }
         else {
             mainActivity.zero_select_picture.post {
+                mainActivity.sounds.play(mainActivity.soundClick, 1f, 1f, 1, 0, 1f)
                 mainActivity.zero_select_picture.setImageResource(R.drawable.sign_zero_press)
             }
             //        Показываю 0,4 секунды кого выбрал
@@ -44,12 +46,16 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         while((mainActivity.getGameState() == (GameState.GAME_AI_TURN))or(mainActivity.getGameState() == (GameState.GAME_HUMAN_TURN))) {
             println("inside цикл = " + mainActivity.getGameState())
             if(mainActivity.getGameState() == GameState.GAME_AI_TURN) {
-                if (mainActivity.dificulty == Dificulty.EASY) {
-                    randomWalk()
-                } else if (mainActivity.dificulty == Dificulty.MEDIUM) {
-                    mediumWalk()
-                } else if (mainActivity.dificulty == Dificulty.HARD) {
-                    hardWalk()
+                when (mainActivity.dificulty) {
+                    Dificulty.EASY -> {
+                        randomWalk()
+                    }
+                    Dificulty.MEDIUM -> {
+                        mediumWalk()
+                    }
+                    Dificulty.HARD -> {
+                        hardWalk()
+                    }
                 }
             }
         }
@@ -147,6 +153,8 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             y = random.nextInt(3)
         } while (!isCellValid(x, y))
 
+
+
         AI_post(x, y, mainActivity.dificulty)
     }
 
@@ -214,10 +222,16 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
         mainActivity.table[x][y] = mainActivity.SIGN_AI
 
         //  Типа думаю
-        when(dificulty) {
-            Dificulty.EASY -> { longitude = 400 }
-            Dificulty.MEDIUM -> { longitude = 750 }
-            Dificulty.HARD -> { longitude = 1200 }
+        longitude = when(dificulty) {
+            Dificulty.EASY -> {
+                600
+            }
+            Dificulty.MEDIUM -> {
+                1000
+            }
+            Dificulty.HARD -> {
+                1300
+            }
         }
         try {
             Thread.sleep(longitude)
@@ -441,28 +455,39 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             0 -> when (y) {
                 0 -> {
                     mainActivity.cell11.post {
-                    if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
-                        mainActivity.cell11.setImageResource(R.drawable.cross)
-                    else
-                        mainActivity.cell11.setImageResource(R.drawable.zero)
+                        if (mainActivity.SIGN_AI == mainActivity.SIGN_X) {
+                            mainActivity.cell11.setImageResource(R.drawable.cross)
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        } else {
+                            mainActivity.cell11.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
                     mainActivity.cell12.post {
-                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X) {
                             mainActivity.cell12.setImageResource(R.drawable.cross)
-                        else
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        }
+                        else {
                             mainActivity.cell12.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
                     mainActivity.cell13.post {
-                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X) {
                             mainActivity.cell13.setImageResource(R.drawable.cross)
-                        else
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        }
+                        else {
                             mainActivity.cell13.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
@@ -470,28 +495,39 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             1 -> when (y) {
                 0 -> {
                     mainActivity.cell21.post {
-                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X) {
                             mainActivity.cell21.setImageResource(R.drawable.cross)
-                        else
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        }
+                        else {
                             mainActivity.cell21.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
                     mainActivity.cell22.post {
-                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X) {
                             mainActivity.cell22.setImageResource(R.drawable.cross)
-                        else
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        }
+                        else {
                             mainActivity.cell22.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
                     mainActivity.cell23.post {
-                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
-                        mainActivity.cell23.setImageResource(R.drawable.cross)
-                    else
-                        mainActivity.cell23.setImageResource(R.drawable.zero)
+                        if (mainActivity.SIGN_AI == mainActivity.SIGN_X) {
+                            mainActivity.cell23.setImageResource(R.drawable.cross)
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        } else {
+                            mainActivity.cell23.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
@@ -499,28 +535,39 @@ class GameLogic(private val mainActivity: MainActivity) : Runnable {
             2 -> when (y) {
                 0 -> {
                     mainActivity.cell31.post {
-                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X) {
                             mainActivity.cell31.setImageResource(R.drawable.cross)
-                        else
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        }
+                        else {
                             mainActivity.cell31.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 1 -> {
                     mainActivity.cell32.post {
-                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        if (mainActivity.SIGN_AI == mainActivity.SIGN_X) {
                             mainActivity.cell32.setImageResource(R.drawable.cross)
-                        else
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        } else {
                             mainActivity.cell32.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
                 2 -> {
                     mainActivity.cell33.post {
-                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X)
+                        if(mainActivity.SIGN_AI == mainActivity.SIGN_X) {
                             mainActivity.cell33.setImageResource(R.drawable.cross)
-                        else
+                            mainActivity.sounds.play(mainActivity.soundCross, 1f, 1f, 1, 0, 1f)
+                        }
+                        else {
                             mainActivity.cell33.setImageResource(R.drawable.zero)
+                            mainActivity.sounds.play(mainActivity.soundRound, 1f, 1f, 1, 0, 1f)
+                        }
                     }
                     mainActivity.setGameState(GameState.GAME_HUMAN_TURN)
                 }
