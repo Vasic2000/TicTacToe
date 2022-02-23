@@ -20,11 +20,12 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var sounds : SoundPool
 
-    var soundCross : Int = 0
-    var soundRound : Int = 0
-    var soundClick : Int = 0
-    var soundWin : Int =0
-    var soundLoose : Int =0
+    var soundCross: Int = 0
+    var soundRound: Int = 0
+    var soundClick: Int = 0
+    var soundWin: Int = 0
+    var soundLoose: Int = 0
+    var soundDraw: Int = 0
 
     @Volatile
     private lateinit var gameState : GameState
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         soundClick = sounds.load(applicationContext, R.raw.click,1)
         soundWin = sounds.load(applicationContext, R.raw.ccawo,1 )
         soundLoose = sounds.load(applicationContext, R.raw.ccawoloose,1 )
+        soundDraw = sounds.load(applicationContext, R.raw.draw, 1)
     }
 
     private fun initImages() {
@@ -362,6 +364,7 @@ class MainActivity : AppCompatActivity() {
                 redrawWinCombination(findWinSheme(SIGN_AI), SIGN_AI)
             }
             GameState.GAME_DRAW -> {
+                sounds.play(soundDraw, 1f, 1f, 1, 0, 1f)
                 gameResultImage.setImageResource(R.drawable.draw)
             }
         }
