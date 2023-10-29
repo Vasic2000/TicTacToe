@@ -362,6 +362,8 @@ class WinSchemeDraw (private val mainActivity: MainActivity, winScheme : WinSche
                     }
                 }
             }
+
+            else -> {}
         }
         println("Отрисовал победителя " + winSign + " и выхожу " + winScheme)
     }

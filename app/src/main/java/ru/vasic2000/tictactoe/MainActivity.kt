@@ -368,6 +368,8 @@ class MainActivity : AppCompatActivity() {
                 sounds.play(soundDraw, 1f, 1f, 1, 0, 1f)
                 gameResultImage.setImageResource(R.drawable.draw)
             }
+
+            else -> {}
         }
     }
 
